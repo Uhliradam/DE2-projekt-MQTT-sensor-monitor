@@ -10,7 +10,21 @@ An IoT environmental monitoring system that measures temperature, humidity, and 
 *Coming soon*
 
 ## Table of Contents
-*Coming soon*
+- [Poster](#poster)
+- [Video Demonstration](#video-demonstration)
+- [Overview](#overview)
+- [Team](#team)
+- [How It Works](#how-it-works)
+- [Hardware](#hardware)
+  - [Hardware Components](#hardware-components)
+  - [Hardware Connections](#hardware-connections)
+- [Architecture](#architecture)
+  - [Top-Level Block Diagram](#top-level-block-diagram)
+  - [Wiring Diagram](#wiring-diagram)
+  - [Software Architecture](#software-architecture)
+  - [Timing and Concurrency](#timing-and-concurrency)
+- [Project Structure](#project-structure)
+- [License](#license)
 
 ## Overview
 The MQTT Sensor Monitor is an IoT project designed to monitor environmental conditions using a Raspberry Pi Pico W and MicroPython.
