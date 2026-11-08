@@ -43,14 +43,14 @@ The project demonstrates:
 
 ## Team
 
-The project is developed by a team of four students.
+Project developed as part of by a team of four students a BPC-DE2 digital electronics 2 course(VUT-FEKT) — 2026.
 
 | Team Member | Responsibilities |
 |-------------|------------------|
-| Jakub Křiva |  |
+| Jakub Křiva | Main Programming Designer |
 | Adam Uhlíř | Repository Management & Documentation |
-| Gabriel Novák |  |
-| Jakub Oselka |  |
+| Gabriel Novák | Scheme & Testbenches |
+| Jakub Oselka | Presentation & Debugging |
 
 ## How It Works
 
@@ -64,7 +64,7 @@ The MQTT Sensor Monitor collects environmental data using a BME280 sensor connec
 | 4 | Sensor Measurement | The BME280 measures temperature, humidity, and atmospheric pressure. |
 | 5 | Data Transmission | Sensor readings are published to MQTT topics at regular intervals. |
 | 6 | Local Status Indication | LEDs or a display indicate the current connection status. |
-| 7 | Data Visualization (Optional) | A web dashboard may display current measurements and graphs. |
+| 7 | Data Visualization | A web dashboard may display current measurements and graphs. |
 
 As an optional extension, the system may detect connection failures and automatically reconnect when the network or MQTT broker becomes unavailable.
 
@@ -111,7 +111,7 @@ The software will be divided into separate modules to simplify development, test
 | MQTT Client | Publishes sensor data to the MQTT broker. |
 | Display / LED Controller | Provides local indication of the connection status. |
 | Main Application | Coordinates sensor measurements, communication, and system operation. |
-| Web Dashboard | Displays received measurements and graphs (optional extension). |
+| Web Dashboard | Displays received measurements and graphs |
 
 ### Timing and Concurrency
 
