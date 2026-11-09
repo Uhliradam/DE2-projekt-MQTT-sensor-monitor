@@ -24,7 +24,7 @@ An IoT environmental monitoring system that measures temperature, humidity, and 
   - [Wiring Diagram](#wiring-diagram)
   - [Electrical Schematic](#electrical-schematic)
   - [Physical Hardware Setup](#physical-hardware-setup)
-- [Architecture](#architecture)
+- [Software](#software)
   - [Software Architecture](#software-architecture)
   - [Timing and Concurrency](#timing-and-concurrency)
 - [Project Structure](#project-structure)
@@ -114,9 +114,9 @@ The following image shows the actual hardware setup of the MQTT Sensor Monitor, 
 
 ![Physical Hardware Setup](images/physical_setup.jpg)
 
-## Architecture
+## Software
 
-The MQTT Sensor Monitor is designed as a modular system consisting of sensor measurement, wireless communication, local status indication, and data visualization.
+The software is developed in MicroPython and is designed to handle sensor measurements, Wi-Fi connectivity, MQTT communication, and OLED display control.
 
 ### Software Architecture
 
