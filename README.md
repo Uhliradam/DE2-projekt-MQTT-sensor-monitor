@@ -22,6 +22,8 @@ An IoT environmental monitoring system that measures temperature, humidity, and 
 - [Architecture](#architecture)
   - [Top-Level Block Diagram](#top-level-block-diagram)
   - [Wiring Diagram](#wiring-diagram)
+  - [Electrical Schematic](#electrical-schematic)
+  - [Physical Hardware Setup](#physical-hardware-setup)
   - [Software Architecture](#software-architecture)
   - [Timing and Concurrency](#timing-and-concurrency)
 - [Project Structure](#project-structure)
@@ -144,17 +146,18 @@ The current repository structure is as follows:
 ```text
 DE2-projekt-MQTT-sensor-monitor/
 │
-├── complete-projects/        # Complete project ZIP archives
+├── complete-projects/          # Complete project ZIP archives
 │
-├── images/                   # Project diagrams and images
-│   ├── block_diagram.png     # Top-level block diagram
-│   ├── wiring_diagram.png    # Hardware wiring diagram
-│   ├── electrical_schematic.png  # Electrical schematic from KiCad
-│   └── physical_setup.jpg    # Photo of the actual hardware setup
+├── images/                     # Project diagrams and images
+│   ├── poster.png              # Project poster
+│   ├── block_diagram.png       # Top-level block diagram
+│   ├── wiring_diagram.png      # Hardware wiring diagram
+│   ├── electrical_schematic.png # Electrical schematic from KiCad
+│   └── physical_setup.jpg      # Photo of the actual hardware setup
 │
-├── README.md                 # Project documentation
-├── LICENSE                   # MIT License
-└── .gitignore                # Git ignore rules
+├── README.md                   # Project documentation
+├── LICENSE                     # MIT License
+└── .gitignore                  # Git ignore rules
 ```
 *The repository structure will be expanded during project development.*
 
