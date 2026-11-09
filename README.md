@@ -4,7 +4,6 @@
 An IoT environmental monitoring system that measures temperature, humidity, and atmospheric pressure using a BME280 sensor. The measured data is transmitted via Wi-Fi to an MQTT broker and can be visualized on a web dashboard.
 
 ## Poster
-*Coming soon*
 
 ![Project Poster](images/poster.png)
 
@@ -166,7 +165,7 @@ The application will be designed to coordinate these tasks without unnecessary b
 
 MicroPython's `uasyncio` may be used to manage concurrent tasks, allowing sensor measurements, MQTT communication, and display updates to operate independently.
 
-The proposed intervals and concurrency approach will be verified and adjusted during software implementation.
+*The proposed intervals and concurrency approach will be verified and adjusted during software implementation.*
 
 ## Project Structure
 
