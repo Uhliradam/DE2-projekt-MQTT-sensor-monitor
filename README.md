@@ -20,11 +20,11 @@ An IoT environmental monitoring system that measures temperature, humidity, and 
 - [Hardware](#hardware)
   - [Hardware Components](#hardware-components)
   - [Hardware Connections](#hardware-connections)
-- [Architecture](#architecture)
   - [Top-Level Block Diagram](#top-level-block-diagram)
   - [Wiring Diagram](#wiring-diagram)
   - [Electrical Schematic](#electrical-schematic)
   - [Physical Hardware Setup](#physical-hardware-setup)
+- [Architecture](#architecture)
   - [Software Architecture](#software-architecture)
   - [Timing and Concurrency](#timing-and-concurrency)
 - [Project Structure](#project-structure)
@@ -47,7 +47,7 @@ The project demonstrates:
 
 ## Team
 
-Project developed as part of by a team of four students a BPC-DE2 digital electronics 2 course(VUT-FEKT) — 2026.
+This project is developed by a team of four students as part of the BPC-DE2 (Digital Electronics 2) course at VUT FEKT in 2026.
 
 | Team Member | Responsibilities |
 |-------------|------------------|
@@ -88,29 +88,31 @@ The MQTT Sensor Monitor is based on the Raspberry Pi Pico W microcontroller. It 
 
 ### Hardware Connections
 
-The BME280 sensor will communicate with the Raspberry Pi Pico W using the I2C interface. A display or LEDs will provide local feedback about the system status.
+The BME280 sensor and SH1106 OLED display are connected to the Raspberry Pi Pico W using the I2C interface.
+
+The detailed connections and GPIO pin assignments are shown in the wiring diagram and electrical schematic below.
 
 ### Top-Level Block Diagram
 
-![Top-Level Block Diagram](hardware/block_diagram.png)
+![Top-Level Block Diagram](images/block_diagram.png)
 
 ### Wiring Diagram
 
 The following diagram illustrates the connections between the Raspberry Pi Pico W, BME280 sensor, and SH1106 OLED display.
 
-![Wiring Diagram](hardware/wiring_diagram.png)
+![Wiring Diagram](images/wiring_diagram.png)
 
 ### Electrical Schematic
 
 The following schematic shows the detailed electrical connections and pin assignments of the Raspberry Pi Pico W, BME280 sensor, and SH1106 OLED display.
 
-![Electrical Schematic](hardware/electrical_schematic.png)
+![Electrical Schematic](images/electrical_schematic.png)
 
 ### Physical Hardware Setup
 
 The following image shows the actual hardware setup of the MQTT Sensor Monitor, including the Raspberry Pi Pico W, BME280 sensor, and SH1106 OLED display.
 
-![Physical Hardware Setup](hardware/physical_setup.jpg)
+![Physical Hardware Setup](images/physical_setup.jpg)
 
 ## Architecture
 
@@ -144,18 +146,20 @@ The current repository structure is as follows:
 ```text
 DE2-projekt-MQTT-sensor-monitor/
 │
-├── complete-projects/          # Complete project ZIP archives
+├── complete-projects/           # Complete project ZIP archives
 │
-├── images/                     # Project diagrams and images
-│   ├── poster.png              # Project poster
-│   ├── block_diagram.png       # Top-level block diagram
-│   ├── wiring_diagram.png      # Hardware wiring diagram
+├── images/                      # Project images and diagrams
+│   ├── poster.png               # Project poster
+│   ├── block_diagram.png        # Top-level block diagram
+│   ├── wiring_diagram.png       # Hardware wiring diagram
 │   ├── electrical_schematic.png # Electrical schematic from KiCad
-│   └── physical_setup.jpg      # Photo of the actual hardware setup
+│   └── physical_setup.jpg       # Actual hardware setup
 │
-├── README.md                   # Project documentation
-├── LICENSE                     # MIT License
-└── .gitignore                  # Git ignore rules
+├── software/                    # Software and source code (to be added)
+│
+├── README.md                    # Main project documentation
+├── LICENSE                      # MIT License
+└── .gitignore                   # Git ignore rules
 ```
 *The repository structure will be expanded during project development.*
 
