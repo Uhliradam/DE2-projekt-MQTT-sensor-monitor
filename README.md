@@ -5,6 +5,7 @@ An IoT environmental monitoring system that measures temperature, humidity, and 
 
 ## Poster
 *Coming soon*
+![Project Poster](images/poster.png)
 
 ## Video Demonstration
 *Coming soon*
@@ -95,10 +96,12 @@ The MQTT Sensor Monitor is designed as a modular system consisting of sensor mea
 ### Top-Level Block Diagram
 
 *Coming soon – the system block diagram will be added here.*
+![Top-Level Block Diagram](images/block_diagram.png)
 
 ### Wiring Diagram
 
 *Coming soon – the wiring diagram with GPIO pin assignments will be added here.*
+![Wiring Diagram](images/wiring_diagram.png)
 
 ### Software Architecture
 
