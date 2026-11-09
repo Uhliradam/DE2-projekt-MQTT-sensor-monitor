@@ -5,6 +5,7 @@ An IoT environmental monitoring system that measures temperature, humidity, and 
 
 ## Poster
 *Coming soon*
+
 ![Project Poster](images/poster.png)
 
 ## Video Demonstration
@@ -89,34 +90,31 @@ The MQTT Sensor Monitor is based on the Raspberry Pi Pico W microcontroller. It 
 
 The BME280 sensor will communicate with the Raspberry Pi Pico W using the I2C interface. A display or LEDs will provide local feedback about the system status.
 
-*The exact GPIO pin assignments and wiring diagram will be added after the hardware configuration is finalized.*
-
-## Architecture
-
-The MQTT Sensor Monitor is designed as a modular system consisting of sensor measurement, wireless communication, local status indication, and data visualization.
-
 ### Top-Level Block Diagram
 
-*Coming soon – the system block diagram will be added here.*
-![Top-Level Block Diagram](images/block_diagram.png)
+![Top-Level Block Diagram](hardware/block_diagram.png)
 
 ### Wiring Diagram
 
 The following diagram illustrates the connections between the Raspberry Pi Pico W, BME280 sensor, and SH1106 OLED display.
 
-![Wiring Diagram](images/wiring_diagram.png)
+![Wiring Diagram](hardware/wiring_diagram.png)
 
 ### Electrical Schematic
 
 The following schematic shows the detailed electrical connections and pin assignments of the Raspberry Pi Pico W, BME280 sensor, and SH1106 OLED display.
 
-![Electrical Schematic](images/electrical_schematic.png)
+![Electrical Schematic](hardware/electrical_schematic.png)
 
 ### Physical Hardware Setup
 
 The following image shows the actual hardware setup of the MQTT Sensor Monitor, including the Raspberry Pi Pico W, BME280 sensor, and SH1106 OLED display.
 
-![Physical Hardware Setup](images/physical_setup.jpg)
+![Physical Hardware Setup](hardware/physical_setup.jpg)
+
+## Architecture
+
+The MQTT Sensor Monitor is designed as a modular system consisting of sensor measurement, wireless communication, local status indication, and data visualization.
 
 ### Software Architecture
 
