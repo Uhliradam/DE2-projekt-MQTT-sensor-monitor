@@ -132,12 +132,19 @@ The current repository structure is as follows:
 DE2-projekt-MQTT-sensor-monitor/
 │
 ├── complete-projects/    # ZIP archives of complete project versions
-│   └── .gitkeep
+│
+├── images/               # Project images and diagrams
+│   ├── block_diagram.png  # Top-level block diagram
+│   ├── wiring_diagram.png # Hardware wiring diagram
+│   └── poster.png         # Project poster
 │
 ├── README.md             # Project documentation
 ├── LICENSE               # MIT License
 └── .gitignore            # Git ignore rules
 ```
+
+*The repository structure will be expanded during project development.*
+
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
