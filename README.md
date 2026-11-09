@@ -82,7 +82,7 @@ The MQTT Sensor Monitor is based on the Raspberry Pi Pico W microcontroller. It 
 |-----------|-------------|-----------|
 | Raspberry Pi Pico W | Main microcontroller running MicroPython | GPIO, I2C, Wi-Fi |
 | BME280 Sensor | Measures temperature, humidity, and atmospheric pressure | I2C |
-| Display / LEDs | Indicates Wi-Fi and MQTT connection status | SPI / I2C / GPIO |
+| SH1106 OLED Display | Displays sensor measurements and connection status | I2C |
 | Wi-Fi Access Point | Provides wireless network connectivity | Wi-Fi |
 | Computer | Hosts the MQTT broker and optional web dashboard | Wi-Fi / Ethernet |
 
@@ -138,7 +138,7 @@ The software will be divided into separate modules to simplify development, test
 | BME280 Driver | Handles I2C communication and reads environmental measurements. |
 | Wi-Fi Manager | Manages Wi-Fi connectivity and connection status. |
 | MQTT Client | Publishes sensor data to the MQTT broker. |
-| Display / LED Controller | Provides local indication of the connection status. |
+| SH1106 OLED Controller | Handles OLED display updates and connection status indication. |
 | Main Application | Coordinates sensor measurements, communication, and system operation. |
 | Web Dashboard | Displays received measurements and graphs |
 
