@@ -88,9 +88,20 @@ The MQTT Sensor Monitor is based on the Raspberry Pi Pico W microcontroller. It 
 
 ### Hardware Connections
 
-The BME280 sensor and SH1106 OLED display are connected to the Raspberry Pi Pico W using the I2C interface.
+The BME280 sensor and SH1106 OLED display will be connected to the Raspberry Pi Pico W using a shared I2C bus.
 
-The detailed connections and GPIO pin assignments are shown in the wiring diagram and electrical schematic below.
+The proposed pin assignments are shown below:
+
+| Raspberry Pi Pico W | BME280 | SH1106 OLED | Function |
+|---------------------|--------|-------------|----------|
+| GP4 (Pin 6) | SDA | SDA | I2C Data |
+| GP5 (Pin 7) | SCL | SCL | I2C Clock |
+| 3V3(OUT) (Pin 36) | VIN | VCC | 3.3 V Power Supply |
+| GND (Pin 38) | GND | GND | Ground |
+
+The detailed connections will be illustrated in the wiring diagram and electrical schematic below.
+
+*The proposed pin assignments will be verified during hardware implementation.*
 
 ### Top-Level Block Diagram
 
@@ -133,11 +144,22 @@ The software will be divided into separate modules to simplify development, test
 
 ### Timing and Concurrency
 
-The system will perform sensor measurements, MQTT communication, and local status updates periodically.
+The system will perform several periodic tasks, including sensor measurements, MQTT data transmission, and OLED display updates.
 
-MicroPython's `uasyncio` will be considered to coordinate these operations without unnecessary blocking.
+The proposed timing plan is shown below:
 
-The measurement intervals, publishing frequency, and task scheduling will be specified and verified during implementation.
+| Task | Proposed Interval | Description |
+|------|-------------------|-------------|
+| Sensor Measurement | 2 s | Read temperature, humidity, and pressure from the BME280 sensor. |
+| MQTT Publishing | 5 s | Publish the latest measurements to the MQTT broker. |
+| OLED Display Update | 1 s | Update the displayed measurements and connection status. |
+| Connection Monitoring | 5 s | Check Wi-Fi and MQTT connection status. |
+
+The application will be designed to coordinate these tasks without unnecessary blocking.
+
+MicroPython's `uasyncio` may be used to manage concurrent tasks, allowing sensor measurements, MQTT communication, and display updates to operate independently.
+
+The proposed intervals and concurrency approach will be verified and adjusted during software implementation.
 
 ## Project Structure
 
