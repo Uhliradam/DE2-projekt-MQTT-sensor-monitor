@@ -117,7 +117,7 @@ The following diagram illustrates the connections between the Raspberry Pi Pico 
 
 The following schematic shows the detailed electrical connections and pin assignments of the Raspberry Pi Pico W, BME280 sensor, and SH1106 OLED display.
 
-![Electrical Schematic](images/electrical_schematic.png)
+![Electrical Schematic](images/MQTT_sensor_schematic.png)
 
 ### Physical Hardware Setup
 
