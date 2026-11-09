@@ -26,6 +26,7 @@ An IoT environmental monitoring system that measures temperature, humidity, and 
   - [Physical Hardware Setup](#physical-hardware-setup)
 - [Software](#software)
   - [Software Architecture](#software-architecture)
+  - [Software Block Diagram](#software-block-diagram)
   - [Timing and Concurrency](#timing-and-concurrency)
 - [Project Structure](#project-structure)
 - [License](#license)
@@ -94,10 +95,10 @@ The proposed pin assignments are shown below:
 
 | Raspberry Pi Pico W | BME280 | SH1106 OLED | Function |
 |---------------------|--------|-------------|----------|
-| GP4 (Pin 6) | SDA | SDA | I2C Data |
-| GP5 (Pin 7) | SCL | SCL | I2C Clock |
-| 3V3(OUT) (Pin 36) | VIN | VCC | 3.3 V Power Supply |
-| GND (Pin 38) | GND | GND | Ground |
+| GP4 (Pin 6) | SDA | SDA (Pin 4) | I2C Data |
+| GP5 (Pin 7) | SCL | SCK (Pin 3) | I2C Clock |
+| 3V3(OUT) (Pin 36) | VIN (Pin 1) | VCC (Pin 2) | 3.3 V Power Supply |
+| GND (Pin 3) | GND (Pin 2) | GND (Pin 1) | Ground |
 
 The detailed connections will be illustrated in the wiring diagram and electrical schematic below.
 
@@ -141,6 +142,12 @@ The software will be divided into separate modules to simplify development, test
 | SH1106 OLED Controller | Handles OLED display updates and connection status indication. |
 | Main Application | Coordinates sensor measurements, communication, and system operation. |
 | Web Dashboard | Displays received measurements and graphs |
+
+### Software Block Diagram
+
+The following diagram illustrates the main software modules and their interactions within the MQTT Sensor Monitor.
+
+![Software Block Diagram](images/software_block_diagram.png)
 
 ### Timing and Concurrency
 
