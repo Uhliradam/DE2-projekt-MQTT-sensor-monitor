@@ -100,8 +100,21 @@ The MQTT Sensor Monitor is designed as a modular system consisting of sensor mea
 
 ### Wiring Diagram
 
-*Coming soon – the wiring diagram with GPIO pin assignments will be added here.*
+The following diagram illustrates the connections between the Raspberry Pi Pico W, BME280 sensor, and SH1106 OLED display.
+
 ![Wiring Diagram](images/wiring_diagram.png)
+
+### Electrical Schematic
+
+The following schematic shows the detailed electrical connections and pin assignments of the Raspberry Pi Pico W, BME280 sensor, and SH1106 OLED display.
+
+![Electrical Schematic](images/electrical_schematic.png)
+
+### Physical Hardware Setup
+
+The following image shows the actual hardware setup of the MQTT Sensor Monitor, including the Raspberry Pi Pico W, BME280 sensor, and SH1106 OLED display.
+
+![Physical Hardware Setup](images/physical_setup.jpg)
 
 ### Software Architecture
 
@@ -131,18 +144,18 @@ The current repository structure is as follows:
 ```text
 DE2-projekt-MQTT-sensor-monitor/
 │
-├── complete-projects/    # ZIP archives of complete project versions
+├── complete-projects/        # Complete project ZIP archives
 │
-├── images/               # Project images and diagrams
-│   ├── block_diagram.png  # Top-level block diagram
-│   ├── wiring_diagram.png # Hardware wiring diagram
-│   └── poster.png         # Project poster
+├── images/                   # Project diagrams and images
+│   ├── block_diagram.png     # Top-level block diagram
+│   ├── wiring_diagram.png    # Hardware wiring diagram
+│   ├── electrical_schematic.png  # Electrical schematic from KiCad
+│   └── physical_setup.jpg    # Photo of the actual hardware setup
 │
-├── README.md             # Project documentation
-├── LICENSE               # MIT License
-└── .gitignore            # Git ignore rules
+├── README.md                 # Project documentation
+├── LICENSE                   # MIT License
+└── .gitignore                # Git ignore rules
 ```
-
 *The repository structure will be expanded during project development.*
 
 ## License
