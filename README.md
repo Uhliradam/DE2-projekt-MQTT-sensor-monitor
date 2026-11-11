@@ -33,7 +33,7 @@ An IoT environmental monitoring system that measures temperature, humidity, and 
 ## Overview
 The MQTT Sensor Monitor is an IoT project designed to monitor environmental conditions using a Raspberry Pi Pico W and MicroPython.
 
-The system measures temperature, humidity, and atmospheric pressure using a BME280 sensor. The collected data will be transmitted over Wi-Fi to an Eclipse Mosquitto MQTT broker. As an optional extension, the measurements may also be visualized through a web dashboard.
+The system measures temperature, humidity, and atmospheric pressure using a BME280 sensor. The collected data is transmitted over Wi-Fi to an Eclipse Mosquitto MQTT broker. The measurements are also visualized through a web dashboard.
 
 The project demonstrates:
 
@@ -42,7 +42,7 @@ The project demonstrates:
 - Wireless communication via Wi-Fi
 - MQTT protocol for transmitting sensor data
 - Local visualization of sensor measurements and connection status using an SH1106 OLED display
-- Optional real-time data visualization using graphs
+- Real-time data visualization using graphs
 - Modular programming in MicroPython
 
 ## Team
@@ -68,9 +68,9 @@ The MQTT Sensor Monitor collects environmental data using a BME280 sensor connec
 | 4 | Sensor Measurement | The BME280 measures temperature, humidity, and atmospheric pressure. |
 | 5 | Data Transmission | Sensor readings are published to MQTT topics at regular intervals. |
 | 6 | Local Status Indication | The SH1106 OLED display shows sensor measurements and Wi-Fi/MQTT connection status. |
-| 7 | Data Visualization | A web dashboard may display current measurements and graphs. |
+| 7 | Data Visualization | A web dashboard displays current measurements and graphs. |
 
-As an optional extension, the system may detect connection failures and automatically reconnect when the network or MQTT broker becomes unavailable.
+The system detects connection failures and automatically reconnects when the Wi-Fi network or MQTT broker becomes unavailable.
 
 ## Hardware
 
@@ -88,9 +88,9 @@ The MQTT Sensor Monitor is based on the Raspberry Pi Pico W microcontroller. It 
 
 ### Hardware Connections
 
-The BME280 sensor and SH1106 OLED display will be connected to the Raspberry Pi Pico W using a shared I2C bus.
+The BME280 sensor and SH1106 OLED display are connected to the Raspberry Pi Pico W using a shared I2C bus.
 
-The proposed pin assignments are shown below:
+The pin assignments are shown below:
 
 | Raspberry Pi Pico W | BME280 | SH1106 OLED | Function |
 |---------------------|--------|-------------|----------|
@@ -100,8 +100,6 @@ The proposed pin assignments are shown below:
 | GND (Pin 3) | GND (Pin 2) | GND (Pin 1) | Ground |
 
 The detailed connections will be illustrated in the wiring diagram and electrical schematic below.
-
-*The proposed pin assignments will be verified during hardware implementation.*
 
 ### Top-Level Block Diagram
 
@@ -131,16 +129,16 @@ The software is developed in MicroPython and is designed to handle sensor measur
 
 ### Software Architecture
 
-The software will be divided into separate modules to simplify development, testing, and maintenance.
+The software is divided into separate modules to simplify development, testing, and maintenance.
 
 | Module | Description |
 |--------|-------------|
 | BME280 Driver | Handles I2C communication and reads environmental measurements. |
 | Wi-Fi Manager | Manages Wi-Fi connectivity and connection status. |
-| MQTT Client | Publishes sensor data to the MQTT broker. |
+| MQTT Client | Publishes sensor data to the Eclipse Mosquitto MQTT broker. |
 | SH1106 OLED Controller | Handles OLED display updates and connection status indication. |
 | Main Application | Coordinates sensor measurements, communication, and system operation. |
-| Web Dashboard (Optional) | Displays received measurements and graphs. |
+| Web Dashboard | Displays received measurements and real-time graphs. |
 
 ### Software Block Diagram
 
@@ -148,28 +146,29 @@ The following diagram illustrates the main software modules and their interactio
 
 ![Software Block Diagram](images/software_block_diagram.png)
 
+
 ### Timing and Concurrency
 
-The system will perform several periodic tasks, including sensor measurements, MQTT data transmission, and OLED display updates.
+The system performs several periodic tasks, including sensor measurements, MQTT data transmission, and OLED display updates.
 
-The proposed timing plan is shown below:
+The task intervals are shown below:
 
-| Task | Proposed Interval | Description |
-|------|-------------------|-------------|
+| Task | Interval | Description |
+|------|----------|-------------|
 | Sensor Measurement | 2 s | Read temperature, humidity, and pressure from the BME280 sensor. |
 | MQTT Publishing | 5 s | Publish the latest measurements to the MQTT broker. |
 | OLED Display Update | 1 s | Update the displayed measurements and connection status. |
 | Connection Monitoring | 5 s | Check Wi-Fi and MQTT connection status. |
 
-The application will be designed to coordinate these tasks without unnecessary blocking.
+The application coordinates these tasks without unnecessary blocking.
 
-MicroPython's `uasyncio` may be used to manage concurrent tasks, allowing sensor measurements, MQTT communication, and display updates to operate independently.
+MicroPython's `uasyncio` manages concurrent tasks, allowing sensor measurements, MQTT communication, and display updates to operate independently.
 
 *The proposed intervals and concurrency approach will be verified and adjusted during software implementation.*
 
 ## Project Structure
 
-The current repository structure is as follows:
+The repository is organized as follows:
 
 ```text
 DE2-projekt-MQTT-sensor-monitor/
