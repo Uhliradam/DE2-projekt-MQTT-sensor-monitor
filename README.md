@@ -44,6 +44,7 @@ The project demonstrates:
 - Local visualization of sensor measurements and connection status using an SH1106 OLED display
 - Real-time data visualization using graphs
 - Modular programming in MicroPython
+- RGB LED indication of Wi-Fi and MQTT connection status
 
 ## Team
 
@@ -68,7 +69,8 @@ The MQTT Sensor Monitor collects environmental data using a BME280 sensor connec
 | 4 | Sensor Measurement | The BME280 measures temperature, humidity, and atmospheric pressure. |
 | 5 | Data Transmission | Sensor readings are published to MQTT topics at regular intervals. |
 | 6 | Local Status Indication | The SH1106 OLED display shows sensor measurements and Wi-Fi/MQTT connection status. |
-| 7 | Data Visualization | A web dashboard displays current measurements and graphs. |
+| 7 | RGB LED Status Indication | The RGB LED indicates connection status: green when connected, red when disconnected, and blinking yellow while connecting. |
+| 8 | Data Visualization | A web dashboard displays current measurements and graphs. |
 
 The system detects connection failures and automatically reconnects when the Wi-Fi network or MQTT broker becomes unavailable.
 
@@ -83,8 +85,9 @@ The MQTT Sensor Monitor is based on the Raspberry Pi Pico W microcontroller. It 
 | Raspberry Pi Pico W | Main microcontroller running MicroPython | GPIO, I2C, Wi-Fi |
 | BME280 Sensor | Measures temperature, humidity, and atmospheric pressure | I2C |
 | SH1106 OLED Display | Displays sensor measurements and connection status | I2C |
+| RGB LED | Indicates Wi-Fi and MQTT connection status using different colors | GPIO |
 | Wi-Fi Access Point | Provides wireless network connectivity | Wi-Fi |
-| Computer | Hosts the Eclipse Mosquitto MQTT broker and optional web dashboard | Wi-Fi / Ethernet |
+| Computer | Hosts the Eclipse Mosquitto MQTT broker and web dashboard | Wi-Fi / Ethernet |
 
 ### Hardware Connections
 
@@ -98,6 +101,20 @@ The pin assignments are shown below:
 | GP5 (Pin 7) | SCL | SCK (Pin 3) | I2C Clock |
 | 3V3(OUT) (Pin 36) | VIN (Pin 1) | VCC (Pin 2) | 3.3 V Power Supply |
 | GND (Pin 3) | GND (Pin 2) | GND (Pin 1) | Ground |
+
+The RGB LED is connected to three GPIO pins and indicates the Wi-Fi and MQTT connection status.
+
+| Raspberry Pi Pico W | RGB LED | Function |
+|---------------------|---------|----------|
+| GP12 (Pin 16) | R (Red) | Red color control |
+| GP13 (Pin 17) | G (Green) | Green color control |
+| GP14 (Pin 19) | B (Blue) | Blue color control |
+
+The RGB LED indicates the connection status as follows:
+
+- Green: Wi-Fi and MQTT connections are established.
+- Red: Wi-Fi or MQTT connection is unavailable.
+- Blinking yellow: The system is attempting to establish or restore a connection.
 
 The detailed connections will be illustrated in the wiring diagram and electrical schematic below.
 
@@ -125,7 +142,7 @@ The following image shows the actual hardware setup of the MQTT Sensor Monitor, 
 
 ## Software
 
-The software is developed in MicroPython and is designed to handle sensor measurements, Wi-Fi connectivity, MQTT communication, and OLED display control.
+The software is developed in MicroPython and handles sensor measurements, Wi-Fi connectivity, MQTT communication, OLED display control, and RGB LED status indication.
 
 ### Software Architecture
 
@@ -138,6 +155,7 @@ The software is divided into separate modules to simplify development, testing, 
 | MQTT Client | Publishes sensor data to the Eclipse Mosquitto MQTT broker. |
 | SH1106 OLED Controller | Handles OLED display updates and connection status indication. |
 | Main Application | Coordinates sensor measurements, communication, and system operation. |
+| RGB LED Controller | Controls RGB LED colors and blinking patterns based on Wi-Fi and MQTT connection status. |
 | Web Dashboard | Displays received measurements and real-time graphs. |
 
 ### Software Block Diagram
@@ -159,12 +177,11 @@ The task intervals are shown below:
 | MQTT Publishing | 5 s | Publish the latest measurements to the MQTT broker. |
 | OLED Display Update | 1 s | Update the displayed measurements and connection status. |
 | Connection Monitoring | 5 s | Check Wi-Fi and MQTT connection status. |
+| RGB LED Update | 0.5 s | Update LED color and blinking state according to connection status. |
 
 The application coordinates these tasks without unnecessary blocking.
 
 MicroPython's `uasyncio` manages concurrent tasks, allowing sensor measurements, MQTT communication, and display updates to operate independently.
-
-*The proposed intervals and concurrency approach will be verified and adjusted during software implementation.*
 
 ## Project Structure
 
@@ -183,13 +200,12 @@ DE2-projekt-MQTT-sensor-monitor/
 │   ├── software_block_diagram.png
 │   └── physical_setup.jpg
 │
-├── software/                    # Software and source code (to be added)
+├── software/                    # Software and source code
 │
 ├── README.md                    # Main project documentation
 ├── LICENSE                      # MIT License
 └── .gitignore                   # Git ignore rules
 ```
-*The repository structure will be expanded during project development.*
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
