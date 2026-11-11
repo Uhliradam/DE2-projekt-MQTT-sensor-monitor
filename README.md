@@ -42,7 +42,7 @@ The project demonstrates:
 - Wireless communication via Wi-Fi
 - MQTT protocol for transmitting sensor data
 - Local visualization of sensor measurements and connection status using an SH1106 OLED display
-- Real-time data visualization using graphs
+- Optional real-time data visualization using graphs
 - Modular programming in MicroPython
 
 ## Team
@@ -140,7 +140,7 @@ The software will be divided into separate modules to simplify development, test
 | MQTT Client | Publishes sensor data to the MQTT broker. |
 | SH1106 OLED Controller | Handles OLED display updates and connection status indication. |
 | Main Application | Coordinates sensor measurements, communication, and system operation. |
-| Web Dashboard | Displays received measurements and graphs |
+| Web Dashboard (Optional) | Displays received measurements and graphs. |
 
 ### Software Block Diagram
 
@@ -176,12 +176,13 @@ DE2-projekt-MQTT-sensor-monitor/
 │
 ├── complete-projects/           # Complete project ZIP archives
 │
-├── images/                      # Project images and diagrams
-│   ├── poster.png               # Project poster
-│   ├── block_diagram.png        # Top-level block diagram
-│   ├── wiring_diagram.png       # Hardware wiring diagram
-│   ├── electrical_schematic.png # Electrical schematic from KiCad
-│   └── physical_setup.jpg       # Actual hardware setup
+├── images/
+│   ├── poster.png
+│   ├── block_diagram.png
+│   ├── wiring_diagram.png
+│   ├── MQTT_sensor_schematic.png
+│   ├── software_block_diagram.png
+│   └── physical_setup.jpg
 │
 ├── software/                    # Software and source code (to be added)
 │
