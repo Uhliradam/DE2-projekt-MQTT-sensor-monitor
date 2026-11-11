@@ -33,7 +33,7 @@ An IoT environmental monitoring system that measures temperature, humidity, and 
 ## Overview
 The MQTT Sensor Monitor is an IoT project designed to monitor environmental conditions using a Raspberry Pi Pico W and MicroPython.
 
-The system measures temperature, humidity, and atmospheric pressure using a BME280 sensor. The collected data will be transmitted over Wi-Fi to an MQTT broker. As an optional extension, the measurements may also be visualized through a web dashboard.
+The system measures temperature, humidity, and atmospheric pressure using a BME280 sensor. The collected data will be transmitted over Wi-Fi to an Eclipse Mosquitto MQTT broker. As an optional extension, the measurements may also be visualized through a web dashboard.
 
 The project demonstrates:
 
@@ -84,7 +84,7 @@ The MQTT Sensor Monitor is based on the Raspberry Pi Pico W microcontroller. It 
 | BME280 Sensor | Measures temperature, humidity, and atmospheric pressure | I2C |
 | SH1106 OLED Display | Displays sensor measurements and connection status | I2C |
 | Wi-Fi Access Point | Provides wireless network connectivity | Wi-Fi |
-| Computer | Hosts the MQTT broker and optional web dashboard | Wi-Fi / Ethernet |
+| Computer | Hosts the Eclipse Mosquitto MQTT broker and optional web dashboard | Wi-Fi / Ethernet |
 
 ### Hardware Connections
 
