@@ -41,7 +41,7 @@ The project demonstrates:
 - I2C communication between the sensor and Raspberry Pi Pico W
 - Wireless communication via Wi-Fi
 - MQTT protocol for transmitting sensor data
-- Local indication of connection status
+- Local visualization of sensor measurements and connection status using an SH1106 OLED display
 - Real-time data visualization using graphs
 - Modular programming in MicroPython
 
@@ -67,7 +67,7 @@ The MQTT Sensor Monitor collects environmental data using a BME280 sensor connec
 | 3 | MQTT Connection | The device establishes a connection with the MQTT broker. |
 | 4 | Sensor Measurement | The BME280 measures temperature, humidity, and atmospheric pressure. |
 | 5 | Data Transmission | Sensor readings are published to MQTT topics at regular intervals. |
-| 6 | Local Status Indication | LEDs or a display indicate the current connection status. |
+| 6 | Local Status Indication | The SH1106 OLED display shows sensor measurements and Wi-Fi/MQTT connection status. |
 | 7 | Data Visualization | A web dashboard may display current measurements and graphs. |
 
 As an optional extension, the system may detect connection failures and automatically reconnect when the network or MQTT broker becomes unavailable.
