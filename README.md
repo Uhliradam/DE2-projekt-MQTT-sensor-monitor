@@ -1,7 +1,7 @@
 # DE2-projekt-MQTT-sensor-monitor
 > MQTT Sensor Monitor using Raspberry Pi Pico W and MicroPython.
 
-An IoT environmental monitoring system that measures temperature, humidity, and atmospheric pressure using a BME280 sensor. The measured data is transmitted via Wi-Fi to an MQTT broker and can be visualized on a web dashboard.
+An IoT environmental monitoring system that measures temperature, humidity, and atmospheric pressure using a BME280 sensor. The measured data is transmitted via Wi-Fi to an Eclipse Mosquitto MQTT broker and visualized on a web dashboard. An SH1106 OLED display shows the measured values, while an RGB LED indicates the connection status.
 
 ## Poster
 
@@ -59,7 +59,7 @@ This project is developed by a team of four students as part of the BPC-DE2 (Dig
 
 ## How It Works
 
-The MQTT Sensor Monitor collects environmental data using a BME280 sensor connected to a Raspberry Pi Pico W. The measured values are transmitted over Wi-Fi to an MQTT broker and can be displayed on a web dashboard.
+The MQTT Sensor Monitor collects environmental data using a BME280 sensor connected to a Raspberry Pi Pico W. The measured values are transmitted over Wi-Fi to an Eclipse Mosquitto MQTT broker and displayed on a web dashboard.
 
 | Step | Action | Description |
 |------|--------|-------------|
@@ -76,7 +76,7 @@ The system detects connection failures and automatically reconnects when the Wi-
 
 ## Hardware
 
-The MQTT Sensor Monitor is based on the Raspberry Pi Pico W microcontroller. It uses a BME280 sensor to measure environmental conditions and Wi-Fi connectivity to transmit data to an MQTT broker.
+The MQTT Sensor Monitor is based on the Raspberry Pi Pico W microcontroller. It uses a BME280 sensor to measure environmental conditions and Wi-Fi connectivity to transmit data to an Eclipse Mosquitto MQTT broker. An SH1106 OLED display provides local visualization of measurements, while an RGB LED indicates the Wi-Fi and MQTT connection status.
 
 ### Hardware Components
 
@@ -85,7 +85,7 @@ The MQTT Sensor Monitor is based on the Raspberry Pi Pico W microcontroller. It 
 | Raspberry Pi Pico W | Main microcontroller running MicroPython | GPIO, I2C, Wi-Fi |
 | BME280 Sensor | Measures temperature, humidity, and atmospheric pressure | I2C |
 | SH1106 OLED Display | Displays sensor measurements and connection status | I2C |
-| RGB LED | Indicates Wi-Fi and MQTT connection status using different colors | GPIO |
+| RGB LED Module (Common Cathode) | Indicates Wi-Fi and MQTT connection status using different colors | GPIO |
 | Wi-Fi Access Point | Provides wireless network connectivity | Wi-Fi |
 | Computer | Hosts the Eclipse Mosquitto MQTT broker and web dashboard | Wi-Fi / Ethernet |
 
@@ -102,7 +102,7 @@ The pin assignments are shown below:
 | 3V3(OUT) (Pin 36) | VIN (Pin 1) | VCC (Pin 2) | 3.3 V Power Supply |
 | GND | GND (Pin 2) | GND (Pin 1) | Ground |
 
-The RGB LED is connected to three GPIO pins and indicates the Wi-Fi and MQTT connection status.
+The RGB LED module is connected to three GPIO pins and indicates the Wi-Fi and MQTT connection status. The module includes built-in current-limiting resistors.
 
 | Raspberry Pi Pico W | RGB LED | Function |
 |---------------------|---------|----------|
@@ -117,7 +117,7 @@ The RGB LED indicates the connection status as follows:
 - Red: Wi-Fi or MQTT connection is unavailable.
 - Blinking yellow: The system is attempting to establish or restore a connection.
 
-The detailed connections will be illustrated in the wiring diagram and electrical schematic below.
+The detailed connections are illustrated in the wiring diagram and electrical schematic below.
 
 ### Top-Level Block Diagram
 
@@ -125,19 +125,19 @@ The detailed connections will be illustrated in the wiring diagram and electrica
 
 ### Wiring Diagram
 
-The following diagram illustrates the connections between the Raspberry Pi Pico W, BME280 sensor, and SH1106 OLED display.
+The following diagram illustrates the connections between the Raspberry Pi Pico W, BME280 sensor, SH1106 OLED display, and RGB LED, including the current-limiting resistors.
 
 ![Wiring Diagram](images/wiring_diagram.png)
 
 ### Electrical Schematic
 
-The following schematic shows the detailed electrical connections and pin assignments of the Raspberry Pi Pico W, BME280 sensor, and SH1106 OLED display.
+The following schematic shows the detailed electrical connections and pin assignments of the Raspberry Pi Pico W, BME280 sensor, SH1106 OLED display, and RGB LED module.
 
 ![Electrical Schematic](images/Electrical_Scheme_DE2.png)
 
 ### Physical Hardware Setup
 
-The following image shows the actual hardware setup of the MQTT Sensor Monitor, including the Raspberry Pi Pico W, BME280 sensor, and SH1106 OLED display.
+The following image shows the actual hardware setup of the MQTT Sensor Monitor, including the Raspberry Pi Pico W, BME280 sensor, SH1106 OLED display, and RGB LED.
 
 ![Physical Hardware Setup](images/physical_setup.jpg)
 
@@ -168,7 +168,7 @@ The following diagram illustrates the main software modules and their interactio
 
 ### Timing and Concurrency
 
-The system performs several periodic tasks, including sensor measurements, MQTT data transmission, and OLED display updates.
+The system performs several periodic tasks, including sensor measurements, MQTT data transmission, OLED display updates, connection monitoring, and RGB LED status indication.
 
 The task intervals are shown below:
 
@@ -182,7 +182,7 @@ The task intervals are shown below:
 
 The application coordinates these tasks without unnecessary blocking.
 
-MicroPython's `uasyncio` manages concurrent tasks, allowing sensor measurements, MQTT communication, and display updates to operate independently.
+MicroPython's `uasyncio` manages concurrent tasks, allowing sensor measurements, MQTT communication, display updates, and RGB LED status indication to operate concurrently.
 
 ## Project Structure
 
@@ -197,9 +197,9 @@ DE2-projekt-MQTT-sensor-monitor/
 │   ├── poster.png
 │   ├── block_diagram.png
 │   ├── wiring_diagram.png
-│   ├── MQTT_sensor_schematic.png
-│   ├── software_block_diagram.png
-│   └── physical_setup.jpg
+│   ├── Electrical_Scheme_DE2.png
+│   ├── physical_setup.jpg
+│   └── software_block_diagram.png
 │
 ├── software/                    # Software and source code
 │
