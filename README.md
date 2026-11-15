@@ -129,6 +129,8 @@ The following diagram illustrates the connections between the Raspberry Pi Pico 
 
 ![Wiring Diagram](images/wiring_diagram.png)
 
+*Note: The sensor shown in the wiring diagram differs from the actual BME280 sensor used in the project. However, the wiring and pin assignments correspond to the actual hardware setup.*
+
 ### Electrical Schematic
 
 The following schematic shows the detailed electrical connections and pin assignments of the Raspberry Pi Pico W, BME280 sensor, SH1106 OLED display, and RGB LED module.
