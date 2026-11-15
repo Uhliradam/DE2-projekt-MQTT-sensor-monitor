@@ -100,7 +100,7 @@ The pin assignments are shown below:
 | GP4 (Pin 6) | SDA | SDA (Pin 4) | I2C Data |
 | GP5 (Pin 7) | SCL | SCK (Pin 3) | I2C Clock |
 | 3V3(OUT) (Pin 36) | VIN (Pin 1) | VCC (Pin 2) | 3.3 V Power Supply |
-| GND (Pin 3) | GND (Pin 2) | GND (Pin 1) | Ground |
+| GND | GND (Pin 2) | GND (Pin 1) | Ground |
 
 The RGB LED is connected to three GPIO pins and indicates the Wi-Fi and MQTT connection status.
 
@@ -109,6 +109,7 @@ The RGB LED is connected to three GPIO pins and indicates the Wi-Fi and MQTT con
 | GP12 (Pin 16) | R (Red) | Red color control |
 | GP13 (Pin 17) | G (Green) | Green color control |
 | GP14 (Pin 19) | B (Blue) | Blue color control |
+| GND | Common Cathode | Ground |
 
 The RGB LED indicates the connection status as follows:
 
