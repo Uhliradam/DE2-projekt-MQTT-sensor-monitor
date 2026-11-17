@@ -193,21 +193,25 @@ The repository is organized as follows:
 ```text
 DE2-projekt-MQTT-sensor-monitor/
 │
-├── complete-projects/           # Complete project ZIP archives
-│
 ├── images/
-│   ├── poster.png
-│   ├── block_diagram.png
-│   ├── wiring_diagram.png
 │   ├── Electrical_Scheme_DE2.png
+│   ├── block_diagram.png
 │   ├── physical_setup.jpg
-│   └── software_block_diagram.png
+│   ├── poster.png
+│   ├── software_block_diagram.png
+│   └── wiring_diagram.png
 │
-├── software/                    # Software and source code
+├── software/
+│   ├── tests/
+│   │   └── .gitkeep
+│   ├── bme280.py
+│   ├── main.py
+│   ├── sh1106.py
+│   └── wifi_utils.py
 │
-├── README.md                    # Main project documentation
-├── LICENSE                      # MIT License
-└── .gitignore                   # Git ignore rules
+├── .gitignore
+├── LICENSE
+└── README.md
 ```
 
 ## License
