@@ -26,6 +26,7 @@ An IoT environmental monitoring system that measures temperature, humidity, and 
   - [Physical Hardware Setup](#physical-hardware-setup)
 - [Software](#software)
   - [Software Architecture](#software-architecture)
+  - [Software Dependencies](#software-dependencies)
   - [Software Block Diagram](#software-block-diagram)
   - [Timing and Concurrency](#timing-and-concurrency)
   - [Component Tests](#component-tests)
@@ -176,6 +177,26 @@ The software is divided into separate modules to simplify development, testing, 
 | Main Application | Coordinates sensor measurements, communication, and system operation. |
 | RGB LED Controller | Controls RGB LED colors and blinking patterns based on Wi-Fi and MQTT connection status. |
 | Web Dashboard | Displays received measurements and real-time graphs. |
+
+
+### Software Dependencies
+
+The MQTT Sensor Monitor is developed in MicroPython for the Raspberry Pi Pico W. The application uses built-in MicroPython modules and additional libraries for sensor communication, display control, Wi-Fi connectivity, and MQTT communication.
+
+| Library / Module | Description |
+|---|---|
+| `machine` | Provides access to GPIO pins and the I2C interface. |
+| `asyncio` | Manages concurrent tasks for sensor measurements, display updates, Wi-Fi, and MQTT communication. |
+| `network` | Provides Wi-Fi connectivity through the Raspberry Pi Pico W wireless interface. |
+| `rp2` | Provides Raspberry Pi RP2-specific functionality. |
+| `json` | Encodes sensor measurements into JSON messages for MQTT transmission. |
+| `umqtt.simple` | Implements the MQTT client used to communicate with the Eclipse Mosquitto broker. |
+| [`bme280.py`](software/bme280.py) | Driver for reading temperature, humidity, and atmospheric pressure from the BME280 sensor. |
+| [`sh1106.py`](software/sh1106.py) | Driver for controlling the SH1106 OLED display over I2C. |
+| [`wifi_utils.py`](software/wifi_utils.py) | Provides helper functions for establishing and managing Wi-Fi connections. |
+
+The application also uses `config.py` for Wi-Fi credentials and MQTT broker configuration. An example configuration is available in [`config_example.py`](software/config_example.py).
+
 
 ### Software Block Diagram
 
