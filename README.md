@@ -18,6 +18,7 @@ An IoT environmental monitoring system that measures temperature, humidity, and 
 - [How It Works](#how-it-works)
 - [Hardware](#hardware)
   - [Hardware Components](#hardware-components)
+  - [Component Datasheets](#component-datasheets)
   - [Hardware Connections](#hardware-connections)
   - [Top-Level Block Diagram](#top-level-block-diagram)
   - [Wiring Diagram](#wiring-diagram)
@@ -89,6 +90,18 @@ The MQTT Sensor Monitor is based on the Raspberry Pi Pico W microcontroller. It 
 | RGB LED Module (Common Cathode) | Indicates Wi-Fi and MQTT connection status using different colors | GPIO |
 | Wi-Fi Access Point | Provides wireless network connectivity | Wi-Fi |
 | Computer | Hosts the Eclipse Mosquitto MQTT broker and web dashboard | Wi-Fi / Ethernet |
+
+
+### Component Datasheets
+
+Technical documentation for the main hardware components is available below.
+
+| Component | Datasheet |
+|---|---|
+| Raspberry Pi Pico W | [View Datasheet](datasheets/raspberry_pi_pico_w.pdf) |
+| BME280 Sensor | [View Datasheet](datasheets/bme280.pdf) |
+| SH1106 OLED Display | [View Datasheet](datasheets/sh1106.pdf) |
+
 
 ### Hardware Connections
 
@@ -205,13 +218,16 @@ The tests verify the functionality of the BME280 sensor, SH1106 OLED display, an
 Detailed descriptions, testing procedures, and expected results are available in the [Component Tests Documentation](software/tests/README.md).
 
 
-
 ## Project Structure
 
 The repository is organized as follows:
 
 ```text
 DE2-projekt-MQTT-sensor-monitor/
+├── datasheets/
+│   ├── raspberry_pi_pico_w.pdf
+│   ├── bme280.pdf
+│   └── sh1106.pdf
 │
 ├── images/
 │   ├── Electrical_Scheme_DE2.png
