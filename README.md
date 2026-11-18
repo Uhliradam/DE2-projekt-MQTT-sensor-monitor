@@ -134,17 +134,11 @@ The RGB LED indicates the connection status as follows:
 
 The detailed connections are illustrated in the wiring diagram and electrical schematic below.
 
+
 ### Top-Level Block Diagram
 
 ![Top-Level Block Diagram](images/block_diagram.png)
 
-### Wiring Diagram
-
-The following diagram illustrates the connections between the Raspberry Pi Pico W, BME280 sensor, SH1106 OLED display, and RGB LED, including the current-limiting resistors.
-
-![Wiring Diagram](images/wiring_diagram.png)
-
-*Note: The sensor shown in the wiring diagram differs from the actual BME280 sensor used in the project. However, the wiring and pin assignments correspond to the actual hardware setup.*
 
 ### Electrical Schematic
 
@@ -152,17 +146,20 @@ The following schematic shows the detailed electrical connections and pin assign
 
 ![Electrical Schematic](images/Electrical_Scheme_DE2.png)
 
+
 ### Physical Hardware Setup
 
 The following image shows the actual hardware setup of the MQTT Sensor Monitor, including the Raspberry Pi Pico W, BME280 sensor, SH1106 OLED display, and RGB LED.
 
 ![Physical Hardware Setup](images/physical_setup.jpg)
 
+
 ## Software
 
 The software is developed in MicroPython and handles sensor measurements, Wi-Fi connectivity, MQTT communication, OLED display control, and RGB LED status indication.
 
 The Raspberry Pi Pico W runs MicroPython version 3.15.2.
+
 
 ### Software Architecture
 
