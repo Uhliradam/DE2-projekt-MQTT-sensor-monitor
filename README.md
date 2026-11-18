@@ -148,6 +148,8 @@ The following image shows the actual hardware setup of the MQTT Sensor Monitor, 
 
 The software is developed in MicroPython and handles sensor measurements, Wi-Fi connectivity, MQTT communication, OLED display control, and RGB LED status indication.
 
+The Raspberry Pi Pico W runs MicroPython version 3.15.2.
+
 ### Software Architecture
 
 The software is divided into separate modules to simplify development, testing, and maintenance.
@@ -177,7 +179,7 @@ The task intervals are shown below:
 
 | Task | Interval | Description |
 |------|----------|-------------|
-| Sensor Measurement | 2 s | Read temperature, humidity, and pressure from the BME280 sensor. |
+| Sensor Measurement | 60 s | Read temperature, humidity, and pressure from the BME280 sensor. |
 | MQTT Publishing | 5 s | Publish the latest measurements to the MQTT broker. |
 | OLED Display Update | 1 s | Update the displayed measurements and connection status. |
 | Connection Monitoring | 5 s | Check Wi-Fi and MQTT connection status. |
