@@ -13,17 +13,25 @@ Tasky (asyncio):
     sensor_task   měří senzor a ukládá hodnoty do sdíleného stavu
     display_task  vykresluje sdílený stav na OLED
     wifi_task     udržuje připojení k Wi-Fi
+    mqtt_task     posílá naměřené hodnoty na MQTT broker
+
+MQTT topicy:
+    de2/pico01/data     {"t": 24.06, "h": 44.1, "p": 983.42, "a": 254}
+    de2/pico01/status   "online" / "offline"  (retained, offline = last will)
 """
 
 from machine import I2C, Pin
 import asyncio
+import json
 import network
 import rp2
+
+from umqtt.simple import MQTTClient
 
 from bme280 import BME280
 from sh1106 import SH1106_I2C
 from wifi_utils import connect_async
-from config import SSID, PSWD
+from config import SSID, PSWD, MQTT_BROKER
 
 
 # ==================== Nastavení ====================
@@ -45,10 +53,18 @@ LED_B_PIN = 14
 # Wi-Fi
 WIFI_COUNTRY = "CZ"     # povolí evropské kanály 12 a 13
 
+# MQTT
+MQTT_CLIENT_ID = "pico01"
+MQTT_TOPIC_DATA = b"de2/pico01/data"
+MQTT_TOPIC_STATUS = b"de2/pico01/status"
+MQTT_KEEPALIVE_S = 30   # broker pozná výpadek Pica do 1,5 × 30 s
+MQTT_TIMEOUT_S = 3      # max. čekání na síť, aby se nezasekly ostatní tasky
+
 # Intervaly tasků [s]
 SENSOR_INTERVAL_S = 2
 DISPLAY_INTERVAL_S = 1
 WIFI_INTERVAL_S = 5
+MQTT_INTERVAL_S = 5
 
 
 # ==================== Inicializace ====================
@@ -111,7 +127,7 @@ def read_sensor(bme):
 # ==================== Displej ====================
 
 def draw_display(oled, state):
-    """Vykreslí naměřené hodnoty a stav Wi-Fi na OLED."""
+    """Vykreslí naměřené hodnoty a stav Wi-Fi / MQTT na OLED."""
     if oled is None:
         return
 
@@ -136,9 +152,40 @@ def draw_display(oled, state):
         wifi_text = ".."
     else:
         wifi_text = "--"
-    oled.text(f"WiFi:{wifi_text}", 0, 56)
+    mqtt_text = "OK" if state.mqtt_ok else "--"
+    oled.text(f"WiFi:{wifi_text} MQTT:{mqtt_text}", 0, 56)
 
     oled.show()
+
+
+# ==================== MQTT ====================
+
+def mqtt_connect():
+    """Připojí se k brokeru a ohlásí stav 'online'."""
+    client = MQTTClient(MQTT_CLIENT_ID, MQTT_BROKER, keepalive=MQTT_KEEPALIVE_S)
+    client.set_last_will(MQTT_TOPIC_STATUS, b"offline", retain=True)
+    client.connect(timeout=MQTT_TIMEOUT_S)
+    client.publish(MQTT_TOPIC_STATUS, b"online", retain=True)
+    return client
+
+
+def mqtt_close(client):
+    """Zavře spojení bez odhlášení - broker pak sám rozešle 'offline'."""
+    try:
+        client.sock.close()
+    except Exception:
+        pass
+
+
+def make_payload(values):
+    """Převede (t, h, p, a) na JSON text pro MQTT."""
+    t, h, p, a = values
+    return json.dumps({
+        "t": round(t, 2),
+        "h": round(h, 2),
+        "p": round(p, 2),
+        "a": round(a),
+    })
 
 
 # ==================== Sdílený stav ====================
@@ -190,6 +237,36 @@ async def wifi_task(wifi, state):
         await asyncio.sleep(WIFI_INTERVAL_S)
 
 
+async def mqtt_task(state):
+    """Každých MQTT_INTERVAL_S sekund odešle naměřené hodnoty na broker."""
+    client = None
+    while True:
+        if not state.wifi_ok:
+            # Bez Wi-Fi nemá smysl se připojovat
+            if client is not None:
+                mqtt_close(client)
+                client = None
+            state.mqtt_ok = False
+        else:
+            try:
+                if client is None:
+                    client = mqtt_connect()
+                    state.mqtt_ok = True
+                    print("MQTT: pripojeno k", MQTT_BROKER)
+
+                if state.values is not None:
+                    client.publish(MQTT_TOPIC_DATA, make_payload(state.values))
+                else:
+                    client.ping()       # nic k odeslání, jen udržet spojení
+            except OSError as e:
+                print("MQTT chyba:", e)
+                if client is not None:
+                    mqtt_close(client)
+                client = None           # příště se připojí znovu
+                state.mqtt_ok = False
+        await asyncio.sleep(MQTT_INTERVAL_S)
+
+
 # ==================== Hlavní program ====================
 
 async def main():
@@ -205,6 +282,7 @@ async def main():
         sensor_task(bme, state),
         display_task(oled, state),
         wifi_task(wifi, state),
+        mqtt_task(state),
     )
 
 
