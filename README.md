@@ -3,12 +3,15 @@
 
 An IoT environmental monitoring system that measures temperature, humidity, and atmospheric pressure using a BME280 sensor. The measured data is transmitted via Wi-Fi to an Eclipse Mosquitto MQTT broker and visualized on a web dashboard. An SH1106 OLED display shows the measured values, while an RGB LED indicates the connection status.
 
+
 ## Poster
 
 ![Project Poster](images/poster.png)
 
+
 ## Video Demonstration
 *Coming soon*
+
 
 ## Table of Contents
 - [Poster](#poster)
@@ -26,11 +29,13 @@ An IoT environmental monitoring system that measures temperature, humidity, and 
 - [Software](#software)
   - [Software Architecture](#software-architecture)
   - [Software Dependencies](#software-dependencies)
+  - [Module Interfaces (API)](#module-interfaces-api)
   - [Software Block Diagram](#software-block-diagram)
   - [Timing and Concurrency](#timing-and-concurrency)
   - [Component Tests](#component-tests)
 - [Project Structure](#project-structure)
 - [License](#license)
+
 
 ## Overview
 The MQTT Sensor Monitor is an IoT project designed to monitor environmental conditions using a Raspberry Pi Pico W and MicroPython.
@@ -48,6 +53,7 @@ The project demonstrates:
 - Modular programming in MicroPython
 - RGB LED indication of Wi-Fi and MQTT connection status
 
+
 ## Team
 
 This project is developed by a team of four students as part of the BPC-DE2 (Digital Electronics 2) course at VUT FEKT in 2026.
@@ -58,6 +64,7 @@ This project is developed by a team of four students as part of the BPC-DE2 (Dig
 | Adam Uhlíř | Repository Management & Documentation |
 | Gabriel Novák | Scheme & Testbenches |
 | Jakub Oselka | Presentation & Debugging |
+
 
 ## How It Works
 
@@ -76,9 +83,11 @@ The MQTT Sensor Monitor collects environmental data using a BME280 sensor connec
 
 The system detects connection failures and automatically reconnects when the Wi-Fi network or MQTT broker becomes unavailable.
 
+
 ## Hardware
 
 The MQTT Sensor Monitor is based on the Raspberry Pi Pico W microcontroller. It uses a BME280 sensor to measure environmental conditions and Wi-Fi connectivity to transmit data to an Eclipse Mosquitto MQTT broker. An SH1106 OLED display provides local visualization of measurements, while an RGB LED indicates the Wi-Fi and MQTT connection status.
+
 
 ### Hardware Components
 
@@ -192,6 +201,26 @@ The MQTT Sensor Monitor is developed in MicroPython for the Raspberry Pi Pico W.
 | [`wifi_utils.py`](software/wifi_utils.py) | Provides helper functions for establishing and managing Wi-Fi connections. |
 
 The application also uses `config.py` for Wi-Fi credentials and MQTT broker configuration. An example configuration is available in [`config_example.py`](software/config_example.py).
+
+
+### Module Interfaces (API)
+
+The software uses separate modules for sensor measurements, OLED display control, and Wi-Fi connectivity. Each module provides functions that can be reused by the main application and individual component tests.
+
+| Module | Main Functions / Methods | Description |
+|---|---|---|
+| [`bme280.py`](software/bme280.py) | `BME280(i2c)`, `temperature()`, `humidity()`, `pressure()` | Initializes the BME280 sensor and reads environmental measurements. |
+| [`bme280.py`](software/bme280.py) | `read_values()` | Returns temperature, humidity, pressure, and estimated altitude as a tuple. |
+| [`sh1106.py`](software/sh1106.py) | `SH1106_I2C(i2c)`, `text()`, `fill()`, `pixel()` | Initializes the OLED display and draws text or graphics in the display buffer. |
+| [`sh1106.py`](software/sh1106.py) | `show()`, `contrast()`, `poweron()`, `poweroff()` | Updates the display, adjusts brightness, and controls its power state. |
+| [`wifi_utils.py`](software/wifi_utils.py) | `connect()`, `connect_async()` | Establishes a Wi-Fi connection using synchronous or asynchronous operation. |
+| [`wifi_utils.py`](software/wifi_utils.py) | `disconnect()`, `print_status()` | Disconnects the Wi-Fi interface and displays connection status information. |
+
+The BME280 sensor and SH1106 OLED display communicate through the shared I2C interface using GPIO 4 (SDA) and GPIO 5 (SCL).
+
+The RGB LED is controlled directly through GPIO 12, GPIO 13, and GPIO 14 using the MicroPython `machine.Pin` interface.
+
+Individual hardware modules can be verified using the standalone test programs described in the [Component Tests Documentation](software/tests/README.md).
 
 
 ### Software Block Diagram
