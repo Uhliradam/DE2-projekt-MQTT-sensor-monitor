@@ -21,7 +21,6 @@ An IoT environmental monitoring system that measures temperature, humidity, and 
   - [Component Datasheets](#component-datasheets)
   - [Hardware Connections](#hardware-connections)
   - [Top-Level Block Diagram](#top-level-block-diagram)
-  - [Wiring Diagram](#wiring-diagram)
   - [Electrical Schematic](#electrical-schematic)
   - [Physical Hardware Setup](#physical-hardware-setup)
 - [Software](#software)
@@ -252,8 +251,7 @@ DE2-projekt-MQTT-sensor-monitor/
 │   ├── block_diagram.png
 │   ├── physical_setup.jpg
 │   ├── poster.png
-│   ├── software_block_diagram.png
-│   └── wiring_diagram.png
+│   └── software_block_diagram.png
 │
 ├── software/
 │   ├── tests/
