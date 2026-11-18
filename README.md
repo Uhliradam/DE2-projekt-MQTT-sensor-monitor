@@ -27,6 +27,7 @@ An IoT environmental monitoring system that measures temperature, humidity, and 
   - [Software Architecture](#software-architecture)
   - [Software Block Diagram](#software-block-diagram)
   - [Timing and Concurrency](#timing-and-concurrency)
+  - [Component Tests](#component-tests)
 - [Project Structure](#project-structure)
 - [License](#license)
 
@@ -187,6 +188,22 @@ The application coordinates these tasks without unnecessary blocking.
 MicroPython's `uasyncio` manages concurrent tasks, allowing sensor measurements, MQTT communication, display updates, and RGB LED status indication to operate concurrently.
 
 
+### Component Tests
+
+Individual hardware components were tested on the Raspberry Pi Pico W before integration into the main application.
+
+The tests verify the functionality of the BME280 sensor, SH1106 OLED display, and RGB LED module.
+
+| Component | Test | Result |
+|---|---|---|
+| BME280 Sensor | [BME280 Test](software/tests/bme280_test.py) | PASS |
+| SH1106 OLED Display | [SH1106 Test](software/tests/sh1106_test.py) | PASS |
+| RGB LED | [RGB LED Test](software/tests/rgb_test.py) | PASS |
+
+Detailed descriptions, testing procedures, and expected results are available in the [Component Tests Documentation](software/tests/README.md).
+
+
+
 ## Project Structure
 
 The repository is organized as follows:
@@ -204,7 +221,7 @@ DE2-projekt-MQTT-sensor-monitor/
 │
 ├── software/
 │   ├── tests/
-│   │   ├── .gitkeep
+│   │   ├── README.md
 │   │   ├── bme280_test.py
 │   │   ├── rgb_test.py
 │   │   └── sh1106_test.py
