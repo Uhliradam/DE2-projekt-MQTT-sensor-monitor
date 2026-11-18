@@ -210,7 +210,7 @@ The task intervals are shown below:
 | Task | Interval | Description |
 |------|----------|-------------|
 | Sensor Measurement | 60 s | Read temperature, humidity, and pressure from the BME280 sensor. |
-| MQTT Publishing | 5 s | Publish the latest measurements to the MQTT broker. |
+| MQTT Publishing | 60 s | Publish the latest measurements to the MQTT broker. |
 | OLED Display Update | 1 s | Update the displayed measurements and connection status. |
 | Connection Monitoring | 5 s | Check Wi-Fi and MQTT connection status. |
 | RGB LED Update | 0.5 s | Update LED color and blinking state according to connection status. |
