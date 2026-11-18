@@ -131,7 +131,7 @@ The RGB LED indicates the connection status as follows:
 - Red: Wi-Fi or MQTT connection is unavailable.
 - Blinking yellow: The system is attempting to establish or restore a connection.
 
-The detailed connections are illustrated in the wiring diagram and electrical schematic below.
+The detailed connections are illustrated in the electrical schematic below.
 
 
 ### Top-Level Block Diagram
