@@ -186,6 +186,7 @@ The application coordinates these tasks without unnecessary blocking.
 
 MicroPython's `uasyncio` manages concurrent tasks, allowing sensor measurements, MQTT communication, display updates, and RGB LED status indication to operate concurrently.
 
+
 ## Project Structure
 
 The repository is organized as follows:
@@ -203,8 +204,13 @@ DE2-projekt-MQTT-sensor-monitor/
 │
 ├── software/
 │   ├── tests/
-│   │   └── .gitkeep
+│   │   ├── .gitkeep
+│   │   ├── bme280_test.py
+│   │   ├── rgb_test.py
+│   │   └── sh1106_test.py
+│   │
 │   ├── bme280.py
+│   ├── config_example.py
 │   ├── main.py
 │   ├── sh1106.py
 │   └── wifi_utils.py
