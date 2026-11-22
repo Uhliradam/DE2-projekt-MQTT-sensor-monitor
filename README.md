@@ -289,7 +289,7 @@ DE2-projekt-MQTT-sensor-monitor/
 │   │   ├── bme280_test.py
 │   │   ├── rgb_test.py
 │   │   └── sh1106_test.py
-│   │
+│   ├── README.md 
 │   ├── bme280.py
 │   ├── config_example.py
 │   ├── main.py
