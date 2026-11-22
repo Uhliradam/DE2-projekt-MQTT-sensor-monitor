@@ -215,6 +215,7 @@ The software uses separate modules for sensor measurements, OLED display control
 | [`sh1106.py`](software/sh1106.py) | `show()`, `contrast()`, `poweron()`, `poweroff()` | Updates the display, adjusts brightness, and controls its power state. |
 | [`wifi_utils.py`](software/wifi_utils.py) | `connect()`, `connect_async()` | Establishes a Wi-Fi connection using synchronous or asynchronous operation. |
 | [`wifi_utils.py`](software/wifi_utils.py) | `disconnect()`, `print_status()` | Disconnects the Wi-Fi interface and displays connection status information. |
+| [`main.py`](software/main.py) | Main Application | Coordinates sensor measurements, OLED display updates, Wi-Fi connectivity, and MQTT communication. Detailed documentation is available in the [Software README](software/README.md). |
 
 The BME280 sensor and SH1106 OLED display communicate through the shared I2C interface using GPIO 4 (SDA) and GPIO 5 (SCL).
 
