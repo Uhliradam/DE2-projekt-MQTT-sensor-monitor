@@ -37,17 +37,26 @@ An IoT environmental monitoring system that measures temperature, humidity, and 
 
 
 ## Overview
+
 The MQTT Sensor Monitor is an IoT project designed to monitor environmental conditions using a Raspberry Pi Pico W and MicroPython.
 
-The system measures temperature, humidity, and atmospheric pressure using a BME280 sensor. The collected data is transmitted over Wi-Fi to an Eclipse Mosquitto MQTT broker. The measurements are also visualized through a web dashboard.
+The system measures temperature, humidity, and atmospheric pressure using a BME280 sensor and monitors the analog output of an MQ-9 gas sensor. The collected data is transmitted over Wi-Fi to an Eclipse Mosquitto MQTT broker and visualized through a web dashboard.
+
+The SH1106 OLED display provides two display modes: environmental measurements and lunar phases. A push button allows the user to switch between these modes. The current lunar phase is calculated using time synchronized via NTP.
 
 The project demonstrates:
 
 - Environmental monitoring using a BME280 sensor
-- I2C communication between the sensor and Raspberry Pi Pico W
+- Gas detection using an MQ-9 sensor
+- I2C communication between hardware components
+- Analog signal acquisition using ADC
+- GPIO-based input and output control
 - Wireless communication via Wi-Fi
 - MQTT protocol for transmitting sensor data
-- Local visualization of sensor measurements and connection status using an SH1106 OLED display
+- Local visualization using an SH1106 OLED display
+- Display mode switching using a push button
+- Time synchronization using NTP
+- Lunar phase calculation and visualization
 - Real-time data visualization using graphs
 - Modular programming in MicroPython
 - RGB LED indication of Wi-Fi and MQTT connection status
@@ -67,18 +76,21 @@ This project is developed by a team of four students as part of the BPC-DE2 (Dig
 
 ## How It Works
 
-The MQTT Sensor Monitor collects environmental data using a BME280 sensor connected to a Raspberry Pi Pico W. The measured values are transmitted over Wi-Fi to an Eclipse Mosquitto MQTT broker and displayed on a web dashboard.
+The MQTT Sensor Monitor collects environmental data using BME280 and MQ-9 sensors connected to a Raspberry Pi Pico W. The measured values are transmitted over Wi-Fi to an Eclipse Mosquitto MQTT broker and displayed on a web dashboard.
 
 | Step | Action | Description |
 |------|--------|-------------|
-| 1 | System Startup | Raspberry Pi Pico W initializes the sensor and other components. |
+| 1 | System Startup | Raspberry Pi Pico W initializes the sensors, OLED display, RGB LED, push button, and Wi-Fi interface. |
 | 2 | Wi-Fi Connection | The device connects to the configured Wi-Fi network. |
-| 3 | MQTT Connection | The device establishes a connection with the MQTT broker. |
-| 4 | Sensor Measurement | The BME280 measures temperature, humidity, and atmospheric pressure. |
-| 5 | Data Transmission | Sensor readings are published to MQTT topics at regular intervals. |
-| 6 | Local Status Indication | The SH1106 OLED display shows sensor measurements and Wi-Fi/MQTT connection status. |
-| 7 | RGB LED Status Indication | The RGB LED indicates connection status: green when connected, red when disconnected, and blinking yellow while connecting. |
-| 8 | Data Visualization | A web dashboard displays current measurements and graphs. |
+| 3 | Time Synchronization | The device synchronizes its internal clock using NTP. |
+| 4 | MQTT Connection | The device establishes a connection with the MQTT broker. |
+| 5 | Sensor Measurement | The BME280 measures temperature, humidity, and atmospheric pressure. The MQ-9 provides an analog voltage related to gas presence. |
+| 6 | Data Transmission | Sensor readings are published to MQTT topics at regular intervals. |
+| 7 | Local Visualization | The SH1106 OLED display shows sensor measurements and Wi-Fi/MQTT connection status. |
+| 8 | Display Mode Switching | The push button switches between the sensor measurement screen and the lunar phase screen. |
+| 9 | Lunar Phase Calculation | The current lunar phase is calculated using the synchronized time and visualized on the OLED display. |
+| 10 | RGB LED Status Indication | The RGB LED indicates connection status: green when connected, red when disconnected, and blinking yellow while connecting. |
+| 11 | Data Visualization | A web dashboard displays current measurements and graphs. |
 
 The system detects connection failures and automatically reconnects when the Wi-Fi network or MQTT broker becomes unavailable.
 
@@ -178,30 +190,40 @@ The Raspberry Pi Pico W runs MicroPython version 3.15.2.
 
 ### Software Architecture
 
-The software is divided into separate modules to simplify development, testing, and maintenance.
+The software is divided into functional modules to simplify development, testing, and maintenance.
 
 | Module | Description |
 |--------|-------------|
-| BME280 Driver | Handles I2C communication and reads environmental measurements. |
+| BME280 Driver | Handles I2C communication and reads temperature, humidity, and atmospheric pressure. |
+| MQ-9 Driver | Reads and processes the analog output voltage of the gas sensor using ADC. |
 | Wi-Fi Manager | Manages Wi-Fi connectivity and connection status. |
+| NTP Client | Synchronizes the internal clock using the Network Time Protocol. |
+| Lunar Phase Calculator | Calculates the current lunar phase using the synchronized time. |
+| SH1106 OLED Controller | Handles OLED display updates, sensor measurements, connection status, and lunar phase visualization. |
 | MQTT Client | Publishes sensor data to the Eclipse Mosquitto MQTT broker. |
-| SH1106 OLED Controller | Handles OLED display updates and connection status indication. |
-| Main Application | Coordinates sensor measurements, communication, and system operation. |
 | RGB LED Controller | Controls RGB LED colors and blinking patterns based on Wi-Fi and MQTT connection status. |
-| Web Dashboard | Displays received measurements and real-time graphs. |
+| Button Handler | Handles push button input and switches between OLED display modes. |
+| Main Application | Coordinates sensor measurements, communication, periodic tasks, and system operation. |
+| Web Dashboard | Displays received measurements and real-time graphs using Node-RED. |
 
 
 ### Software Dependencies
 
-The MQTT Sensor Monitor is developed in MicroPython for the Raspberry Pi Pico W. The application uses built-in MicroPython modules and additional libraries for sensor communication, display control, Wi-Fi connectivity, and MQTT communication.
+The MQTT Sensor Monitor is developed in MicroPython for the Raspberry Pi Pico W. The application uses built-in MicroPython modules and additional libraries for sensor communication, display control, time synchronization, lunar phase calculation, Wi-Fi connectivity, and MQTT communication.
 
 | Library / Module | Description |
 |---|---|
-| `machine` | Provides access to GPIO pins and the I2C interface. |
-| `asyncio` | Manages concurrent tasks for sensor measurements, display updates, Wi-Fi, and MQTT communication. |
+| `machine` | Provides access to GPIO pins, the I2C interface, and ADC for analog sensor measurements. |
+| `asyncio` | Manages concurrent tasks and asynchronous system operation. |
 | `network` | Provides Wi-Fi connectivity through the Raspberry Pi Pico W wireless interface. |
 | `rp2` | Provides Raspberry Pi RP2-specific functionality. |
 | `json` | Encodes sensor measurements into JSON messages for MQTT transmission. |
+| `math` | Provides mathematical functions for lunar phase calculation and visualization. |
+| `ntptime` | Synchronizes the internal clock using NTP. |
+| `time` | Provides time-related functions and timestamps. |
+| `utime` | Provides timing functions used by the OLED display driver. |
+| `framebuf` | Provides framebuffer operations for OLED text and graphics rendering. |
+| `gc` | Provides garbage collection and memory management. |
 | `umqtt.simple` | Implements the MQTT client used to communicate with the Eclipse Mosquitto broker. |
 | [`bme280.py`](software/bme280.py) | Driver for reading temperature, humidity, and atmospheric pressure from the BME280 sensor. |
 | [`sh1106.py`](software/sh1106.py) | Driver for controlling the SH1106 OLED display over I2C. |
