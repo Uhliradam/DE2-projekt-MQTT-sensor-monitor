@@ -244,7 +244,7 @@ The software uses separate modules for sensor measurements, OLED display control
 | [`sh1106.py`](software/sh1106.py) | `show()`, `contrast()`, `poweron()`, `poweroff()` | Updates the display, adjusts brightness, and controls its power state. |
 | [`wifi_utils.py`](software/wifi_utils.py) | `connect()`, `connect_async()` | Establishes a Wi-Fi connection using synchronous or asynchronous operation. |
 | [`wifi_utils.py`](software/wifi_utils.py) | `disconnect()`, `print_status()` | Disconnects the Wi-Fi interface and displays connection status information. |
-| [`main.py`](software/main.py) | Main Application | Coordinates sensor measurements, OLED display updates, Wi-Fi connectivity, and MQTT communication. Detailed documentation is available in the [Software README](software/README.md). |
+| [`main.py`](software/main.py) | Main Application | Coordinates environmental and gas sensor measurements, OLED display modes, RGB LED control, push button input, Wi-Fi connectivity, NTP synchronization, lunar phase calculation, and MQTT communication. Detailed documentation is available in the [Software README](software/README.md). |
 
 The BME280 sensor and SH1106 OLED display communicate through the shared I2C interface using GPIO 4 (SDA) and GPIO 5 (SCL).
 
@@ -262,21 +262,23 @@ The following diagram illustrates the main software modules and their interactio
 
 ### Timing and Concurrency
 
-The system performs several periodic tasks, including sensor measurements, MQTT data transmission, OLED display updates, connection monitoring, and RGB LED status indication.
-
-The task intervals are shown below:
+The application uses MicroPython `asyncio` to execute seven concurrent tasks. Each task handles a specific system function and uses asynchronous delays to allow other tasks to execute.
 
 | Task | Interval | Description |
 |------|----------|-------------|
-| Sensor Measurement | 60 s | Read temperature, humidity, and pressure from the BME280 sensor. |
-| MQTT Publishing | 60 s | Publish the latest measurements to the MQTT broker. |
-| OLED Display Update | 1 s | Update the displayed measurements and connection status. |
-| Connection Monitoring | 5 s | Check Wi-Fi and MQTT connection status. |
-| RGB LED Update | 0.5 s | Update LED color and blinking state according to connection status. |
+| Sensor Measurement | 2 s | Reads environmental measurements from the BME280 and analog voltage from the MQ-9 sensor. |
+| OLED Display Update | 1 s | Updates the active display mode with current information. |
+| Wi-Fi Monitoring | 5 s | Monitors Wi-Fi connectivity and handles reconnection. |
+| MQTT Publishing | 5 s | Publishes sensor measurements to the MQTT broker. |
+| RGB LED Control | 0.5 s | Updates connection status indication and blinking patterns. |
+| Push Button Monitoring | 30 ms | Detects button presses and switches between OLED display modes. |
+| NTP Synchronization | 5 s (retry) | Attempts to synchronize the internal clock until successful. |
 
-The application coordinates these tasks without unnecessary blocking.
+The tasks are executed concurrently using `asyncio.gather()`, allowing sensor measurements, display updates, network communication, and user input to operate within a single application.
 
-MicroPython's `uasyncio` manages concurrent tasks, allowing sensor measurements, MQTT communication, display updates, and RGB LED status indication to operate concurrently.
+The MQTT client uses a keepalive interval of 30 seconds. When Wi-Fi is unavailable, the MQTT task checks the connection status every second.
+
+NTP synchronization is performed once after establishing a Wi-Fi connection and is retried every 5 seconds until successful.
 
 
 ### Component Tests
