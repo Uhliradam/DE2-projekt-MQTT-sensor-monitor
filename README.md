@@ -315,14 +315,20 @@ The repository is organized as follows:
 
 ```text
 DE2-projekt-MQTT-sensor-monitor/
+├── dashboard/
+│   ├── README.md
+│   └── flows.json
+│
 ├── datasheets/
 │   ├── raspberry_pi_pico_w.pdf
 │   ├── bme280.pdf
-│   └── sh1106.pdf
+│   ├── sh1106.pdf
+│   └── mq9.pdf
 │
 ├── images/
 │   ├── Electrical_Scheme_DE2.png
 │   ├── block_diagram.png
+│   ├── dashboard.png
 │   ├── physical_setup.jpg
 │   ├── poster.png
 │   └── software_block_diagram.png
@@ -331,9 +337,11 @@ DE2-projekt-MQTT-sensor-monitor/
 │   ├── tests/
 │   │   ├── README.md
 │   │   ├── bme280_test.py
+│   │   ├── button_test.py
+│   │   ├── mq9_test.py
 │   │   ├── rgb_test.py
 │   │   └── sh1106_test.py
-│   ├── README.md 
+│   ├── README.md
 │   ├── bme280.py
 │   ├── config_example.py
 │   ├── main.py
@@ -344,6 +352,7 @@ DE2-projekt-MQTT-sensor-monitor/
 ├── LICENSE
 └── README.md
 ```
+
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
