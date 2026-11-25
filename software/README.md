@@ -5,7 +5,7 @@
 
 The [`main.py`](main.py) file is the main application entry point of the MQTT Sensor Monitor.
 
-It coordinates sensor measurements, OLED display updates, Wi-Fi connectivity, and MQTT communication using asynchronous tasks.
+It coordinates sensor measurements, OLED display updates, Wi-Fi connectivity, MQTT communication, and RGB LED status indication using asynchronous tasks.
 
 This document describes the internal operation of the main program. General project information, hardware connections, software architecture, and timing are available in the [main project README](../README.md).
 
@@ -25,12 +25,13 @@ The application starts by executing the asynchronous `main()` function.
 
 The initialization process consists of the following steps:
 
-1. Initialize the I2C bus and scan for connected devices.
-2. Check whether the expected sensor and display are detected.
-3. Initialize the BME280 sensor and SH1106 OLED display.
-4. Activate the Wi-Fi interface in station mode.
-5. Create a shared application state.
-6. Start four asynchronous tasks using `asyncio.gather()`.
+1. Initialize the RGB LED GPIO pins.
+2. Initialize the I2C bus and scan for connected devices.
+3. Check whether the expected sensor and display are detected.
+4. Initialize the BME280 sensor and SH1106 OLED display.
+5. Activate the Wi-Fi interface in station mode.
+6. Create a shared application state.
+7. Start five asynchronous tasks using `asyncio.gather()`.
 
 The initialization functions report hardware errors to the console. If the sensor or display cannot be initialized, the application can continue with reduced functionality.
 
@@ -40,6 +41,9 @@ The main program contains several functions responsible for initialization, data
 
 | Function | Description |
 |---|---|
+| `init_led()` | Initializes the RGB LED GPIO pins and turns the LED off. |
+| `set_led()` | Sets the RGB LED color by controlling the individual GPIO outputs. |
+| `led_color()` | Determines the RGB LED color based on the current Wi-Fi and MQTT connection status. |
 | `init_i2c()` | Initializes the I2C bus and returns the interface and detected device addresses. |
 | `check_devices()` | Checks whether the expected I2C devices are detected. |
 | `init_bme280()` | Initializes the BME280 sensor and returns its object or `None` on failure. |
@@ -54,12 +58,13 @@ The main program contains several functions responsible for initialization, data
 
 ## Asynchronous Tasks
 
-The application uses four asynchronous tasks that operate concurrently.
+The application uses five asynchronous tasks that operate concurrently.
 
 Each task runs in a continuous loop and periodically yields control using `await asyncio.sleep()`.
 
 | Task | Description |
 |---|---|
+| `led_task()` | Updates the RGB LED color according to the current connection status. |
 | `sensor_task()` | Reads environmental measurements and stores them in the shared state. |
 | `display_task()` | Updates the OLED display using the latest measurements and connection status. |
 | `wifi_task()` | Monitors Wi-Fi connectivity and attempts reconnection when necessary. |
@@ -98,6 +103,18 @@ When Wi-Fi is available, the task establishes an MQTT connection if necessary an
 If no valid measurements are available, the client sends an MQTT ping instead.
 
 If communication fails, the client is closed and the application attempts to reconnect during a later task cycle.
+
+
+### RGB LED Task
+
+The `led_task()` function periodically updates the RGB LED using the `set_led()` and `led_color()` functions.
+
+The LED color is determined by the connection flags stored in the shared application state.
+
+The `blink_on` variable alternates between `True` and `False` every 0.5 seconds, enabling the blinking indication during Wi-Fi connection attempts.
+
+The task operates independently of the other asynchronous tasks.
+
 
 ## Shared Application State
 
@@ -150,6 +167,7 @@ The application includes basic error handling for hardware and communication fai
 
 Selected hardware and communication errors are handled using `try` and `except` blocks.
 
+
 ## Program Execution
 
 The application starts with:
@@ -158,7 +176,7 @@ The application starts with:
 asyncio.run(main())
 ```
 
-The `main()` function initializes the required components and starts four asynchronous tasks:
+The `main()` function initializes the required components and starts five asynchronous tasks:
 
 ```python
 await asyncio.gather(
@@ -166,6 +184,7 @@ await asyncio.gather(
     display_task(oled, state),
     wifi_task(wifi, state),
     mqtt_task(state),
+    led_task(led, state),
 )
 ```
 
@@ -173,4 +192,4 @@ The tasks run continuously until the application is interrupted or an unhandled 
 
 A `KeyboardInterrupt` is handled to allow the program to stop from the MicroPython console.
 
-The `finally` block creates a new asyncio event loop so the application can be started again.
+The `finally` block turns off the RGB LED and creates a new asyncio event loop so the application can be started again.
