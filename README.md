@@ -283,17 +283,17 @@ NTP synchronization is performed once after establishing a Wi-Fi connection and 
 
 ### Component Tests
 
-Individual hardware components were tested on the Raspberry Pi Pico W before integration into the main application.
+Individual hardware components can be verified independently using standalone test programs before running the complete application.
 
-The tests verify the functionality of the BME280 sensor, SH1106 OLED display, and RGB LED module.
+| Component | Test Program | Description | Status |
+|---|---|---|---|
+| BME280 | [`bme280_test.py`](software/tests/bme280_test.py) | Verifies environmental sensor measurements and I2C communication. | PASS |
+| SH1106 OLED | [`sh1106_test.py`](software/tests/sh1106_test.py) | Verifies display functionality and graphical rendering. | PASS |
+| RGB LED | [`rgb_test.py`](software/tests/rgb_test.py) | Verifies individual colors and blinking functionality. | PASS |
+| Push Button | [`button_test.py`](software/tests/button_test.py) | Verifies button press and release detection. | Pending |
+| MQ-9 | [`mq9_test.py`](software/tests/mq9_test.py) | Verifies analog signal acquisition using the ADC interface. | Pending |
 
-| Component | Test | Result |
-|---|---|---|
-| BME280 Sensor | [BME280 Test](software/tests/bme280_test.py) | PASS |
-| SH1106 OLED Display | [SH1106 Test](software/tests/sh1106_test.py) | PASS |
-| RGB LED | [RGB LED Test](software/tests/rgb_test.py) | PASS |
-
-Detailed descriptions, testing procedures, and expected results are available in the [Component Tests Documentation](software/tests/README.md).
+Detailed test procedures, hardware configurations, expected results, and verification results are available in the [Component Tests Documentation](software/tests/README.md).
 
 
 ## Project Structure
