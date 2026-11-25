@@ -304,6 +304,8 @@ The project uses Node-RED Dashboard 2.0 to visualize sensor measurements receive
 
 The dashboard provides current environmental measurements, historical charts, estimated altitude, and device connection status.
 
+![Node-RED Dashboard](images/dashboard.png)
+
 Detailed configuration, application architecture, and installation instructions are available in the [Dashboard Documentation](dashboard/README.md).
 
 
