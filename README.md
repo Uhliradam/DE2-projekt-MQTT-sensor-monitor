@@ -96,7 +96,7 @@ The MQTT Sensor Monitor is based on the Raspberry Pi Pico W microcontroller. It 
 | BME280 Sensor | BME280 | 1 | Measures temperature, humidity, and atmospheric pressure | I2C | [View Datasheet](datasheets/bme280.pdf) |
 | SH1106 OLED Display | 128 × 64 pixels | 1 | Displays sensor measurements, connection status, and lunar phases | I2C | [View Datasheet](datasheets/sh1106.pdf) |
 | RGB LED Module | Common cathode | 1 | Indicates Wi-Fi and MQTT connection status using different colors | GPIO | — |
-| MQ-9 Gas Sensor | MQ-9 | 1 | Detects carbon monoxide and combustible gases | ADC | — |
+| MQ-9 Gas Sensor | MQ-9 | 1 | Detects carbon monoxide and combustible gases | ADC | [View Datasheet](datasheets/mq9.pdf) |
 | Push Button | Momentary push button | 1 | Switches between OLED display modes | GPIO | — |
 | Breadboard | Solderless | 1 | Provides hardware prototyping connections | — | — |
 | Jumper Wires | Connecting wires | 17 | Connect individual hardware components | — | — |
