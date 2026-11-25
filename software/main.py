@@ -14,6 +14,12 @@ Tasky (asyncio):
     display_task  vykresluje sdílený stav na OLED
     wifi_task     udržuje připojení k Wi-Fi
     mqtt_task     posílá naměřené hodnoty na MQTT broker
+    led_task      ukazuje stav připojení na RGB LED
+
+RGB LED:
+    zelená             Wi-Fi i MQTT připojené
+    červená            Wi-Fi nebo MQTT nedostupné
+    blikající žlutá    probíhá připojování k Wi-Fi
 
 MQTT topicy:
     de2/pico01/data     {"t": 24.06, "h": 44.1, "p": 983.42, "a": 254}
@@ -45,10 +51,16 @@ I2C_FREQ = 400_000      # 400 kHz (fast mode)
 BME280_ADDR = 0x76
 OLED_ADDR = 0x3C
 
-# RGB LED (společná katoda)
+# RGB LED (společná katoda: 1 = svítí)
 LED_R_PIN = 12
 LED_G_PIN = 13
 LED_B_PIN = 14
+
+# Barvy LED (R, G, B)
+LED_OFF = (0, 0, 0)
+LED_RED = (1, 0, 0)
+LED_GREEN = (0, 1, 0)
+LED_YELLOW = (1, 1, 0)
 
 # Wi-Fi
 WIFI_COUNTRY = "CZ"     # povolí evropské kanály 12 a 13
@@ -65,6 +77,8 @@ SENSOR_INTERVAL_S = 2
 DISPLAY_INTERVAL_S = 1
 WIFI_INTERVAL_S = 5
 MQTT_INTERVAL_S = 5
+MQTT_WAIT_WIFI_S = 1    # jak často MQTT kontroluje, jestli už je Wi-Fi
+LED_INTERVAL_S = 0.5    # zároveň rychlost blikání
 
 
 # ==================== Inicializace ====================
@@ -108,6 +122,15 @@ def init_wifi():
     wifi = network.WLAN(network.STA_IF)
     wifi.active(True)
     return wifi
+
+
+def init_led():
+    """Vrátí piny RGB LED (R, G, B), všechny zhasnuté."""
+    return (
+        Pin(LED_R_PIN, Pin.OUT, value=0),
+        Pin(LED_G_PIN, Pin.OUT, value=0),
+        Pin(LED_B_PIN, Pin.OUT, value=0),
+    )
 
 
 # ==================== Senzor ====================
@@ -156,6 +179,23 @@ def draw_display(oled, state):
     oled.text(f"WiFi:{wifi_text} MQTT:{mqtt_text}", 0, 56)
 
     oled.show()
+
+
+# ==================== RGB LED ====================
+
+def set_led(led, color):
+    """Rozsvítí LED danou barvou, např. set_led(led, LED_GREEN)."""
+    for pin, value in zip(led, color):
+        pin.value(value)
+
+
+def led_color(state, blink_on):
+    """Vybere barvu LED podle stavu připojení."""
+    if state.wifi_connecting:
+        return LED_YELLOW if blink_on else LED_OFF     # bliká = připojuje se
+    if state.wifi_ok and state.mqtt_ok:
+        return LED_GREEN                               # vše připojeno
+    return LED_RED                                     # Wi-Fi nebo MQTT nejede
 
 
 # ==================== MQTT ====================
@@ -247,29 +287,41 @@ async def mqtt_task(state):
                 mqtt_close(client)
                 client = None
             state.mqtt_ok = False
-        else:
-            try:
-                if client is None:
-                    client = mqtt_connect()
-                    state.mqtt_ok = True
-                    print("MQTT: pripojeno k", MQTT_BROKER)
+            await asyncio.sleep(MQTT_WAIT_WIFI_S)   # brzy zkusit znovu
+            continue
 
-                if state.values is not None:
-                    client.publish(MQTT_TOPIC_DATA, make_payload(state.values))
-                else:
-                    client.ping()       # nic k odeslání, jen udržet spojení
-            except OSError as e:
-                print("MQTT chyba:", e)
-                if client is not None:
-                    mqtt_close(client)
-                client = None           # příště se připojí znovu
-                state.mqtt_ok = False
+        try:
+            if client is None:
+                client = mqtt_connect()
+                state.mqtt_ok = True
+                print("MQTT: pripojeno k", MQTT_BROKER)
+
+            if state.values is not None:
+                client.publish(MQTT_TOPIC_DATA, make_payload(state.values))
+            else:
+                client.ping()       # nic k odeslání, jen udržet spojení
+        except OSError as e:
+            print("MQTT chyba:", e)
+            if client is not None:
+                mqtt_close(client)
+            client = None           # příště se připojí znovu
+            state.mqtt_ok = False
         await asyncio.sleep(MQTT_INTERVAL_S)
+
+
+async def led_task(led, state):
+    """Každých LED_INTERVAL_S sekund nastaví barvu LED podle stavu připojení."""
+    blink_on = False
+    while True:
+        blink_on = not blink_on     # střídá zapnuto/vypnuto = blikání
+        set_led(led, led_color(state, blink_on))
+        await asyncio.sleep(LED_INTERVAL_S)
 
 
 # ==================== Hlavní program ====================
 
 async def main():
+    led = init_led()
     i2c, devices = init_i2c()
     check_devices(devices)
 
@@ -283,6 +335,7 @@ async def main():
         display_task(oled, state),
         wifi_task(wifi, state),
         mqtt_task(state),
+        led_task(led, state),
     )
 
 
@@ -291,4 +344,5 @@ try:
 except KeyboardInterrupt:
     print("Program zastaven")
 finally:
-    asyncio.new_event_loop()    # vyčistí asyncio, aby šel program znovu spustit
+    set_led(init_led(), LED_OFF)    # po ukončení LED zhasnout
+    asyncio.new_event_loop()        # vyčistí asyncio, aby šel program znovu spustit
