@@ -20,8 +20,7 @@ An IoT environmental monitoring system that measures temperature, humidity, and 
 - [Team](#team)
 - [How It Works](#how-it-works)
 - [Hardware](#hardware)
-  - [Hardware Components](#hardware-components)
-  - [Component Datasheets](#component-datasheets)
+  - [Hardware Components](#hardware-components (BOM))
   - [Hardware Connections](#hardware-connections)
   - [Top-Level Block Diagram](#top-level-block-diagram)
   - [Electrical Schematic](#electrical-schematic)
@@ -89,27 +88,20 @@ The system detects connection failures and automatically reconnects when the Wi-
 The MQTT Sensor Monitor is based on the Raspberry Pi Pico W microcontroller. It uses a BME280 sensor to measure environmental conditions and Wi-Fi connectivity to transmit data to an Eclipse Mosquitto MQTT broker. An SH1106 OLED display provides local visualization of measurements, while an RGB LED indicates the Wi-Fi and MQTT connection status.
 
 
-### Hardware Components
+### Hardware Components (BOM)
 
-| Component | Description | Interface |
-|-----------|-------------|-----------|
-| Raspberry Pi Pico W | Main microcontroller running MicroPython | GPIO, I2C, Wi-Fi |
-| BME280 Sensor | Measures temperature, humidity, and atmospheric pressure | I2C |
-| SH1106 OLED Display | Displays sensor measurements and connection status | I2C |
-| RGB LED Module (Common Cathode) | Indicates Wi-Fi and MQTT connection status using different colors | GPIO |
-| Wi-Fi Access Point | Provides wireless network connectivity | Wi-Fi |
-| Computer | Hosts the Eclipse Mosquitto MQTT broker and web dashboard | Wi-Fi / Ethernet |
-
-
-### Component Datasheets
-
-Technical documentation for the main hardware components is available below.
-
-| Component | Datasheet |
-|---|---|
-| Raspberry Pi Pico W | [View Datasheet](datasheets/raspberry_pi_pico_w.pdf) |
-| BME280 Sensor | [View Datasheet](datasheets/bme280.pdf) |
-| SH1106 OLED Display | [View Datasheet](datasheets/sh1106.pdf) |
+| Component | Specification | Quantity | Description | Interface | Datasheet |
+|---|---|---:|---|---|---|
+| Raspberry Pi Pico W | RP2040 | 1 | Main microcontroller running MicroPython | GPIO, I2C, ADC, Wi-Fi | [View Datasheet](datasheets/raspberry_pi_pico_w.pdf) |
+| BME280 Sensor | BME280 | 1 | Measures temperature, humidity, and atmospheric pressure | I2C | [View Datasheet](datasheets/bme280.pdf) |
+| SH1106 OLED Display | 128 × 64 pixels | 1 | Displays sensor measurements, connection status, and lunar phases | I2C | [View Datasheet](datasheets/sh1106.pdf) |
+| RGB LED Module | Common cathode | 1 | Indicates Wi-Fi and MQTT connection status using different colors | GPIO | — |
+| MQ-9 Gas Sensor | MQ-9 | 1 | Detects carbon monoxide and combustible gases | ADC | — |
+| Push Button | Momentary push button | 1 | Switches between OLED display modes | GPIO | — |
+| Breadboard | Solderless | 1 | Provides hardware prototyping connections | — | — |
+| Jumper Wires | Connecting wires | 17 | Connect individual hardware components | — | — |
+| Wi-Fi Access Point | Wireless network | 1 | Provides wireless network connectivity | Wi-Fi | — |
+| Computer | MQTT server | 1 | Hosts the Eclipse Mosquitto MQTT broker and web dashboard | Wi-Fi / Ethernet | — |
 
 
 ### Hardware Connections
