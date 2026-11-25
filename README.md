@@ -20,7 +20,7 @@ An IoT environmental monitoring system that measures temperature, humidity, and 
 - [Team](#team)
 - [How It Works](#how-it-works)
 - [Hardware](#hardware)
-  - [Hardware Components](#hardware-components)
+  - [Hardware Components (BOM)](#hardware-components-bom)
   - [Hardware Connections](#hardware-connections)
   - [Top-Level Block Diagram](#top-level-block-diagram)
   - [Electrical Schematic](#electrical-schematic)
