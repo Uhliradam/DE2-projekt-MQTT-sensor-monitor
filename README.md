@@ -32,6 +32,8 @@ An IoT environmental monitoring system that measures temperature, humidity, and 
   - [Software Block Diagram](#software-block-diagram)
   - [Timing and Concurrency](#timing-and-concurrency)
   - [Component Tests](#component-tests)
+  - [Web Dashboard](#web-dashboard)
+
 - [Project Structure](#project-structure)
 - [License](#license)
 
@@ -294,6 +296,15 @@ Individual hardware components can be verified independently using standalone te
 | MQ-9 | [`mq9_test.py`](software/tests/mq9_test.py) | Verifies analog signal acquisition using the ADC interface. | Pending |
 
 Detailed test procedures, hardware configurations, expected results, and verification results are available in the [Component Tests Documentation](software/tests/README.md).
+
+
+### Web Dashboard
+
+The project uses Node-RED Dashboard 2.0 to visualize sensor measurements received through MQTT.
+
+The dashboard provides current environmental measurements, historical charts, estimated altitude, and device connection status.
+
+Detailed configuration, application architecture, and installation instructions are available in the [Dashboard Documentation](dashboard/README.md).
 
 
 ## Project Structure
