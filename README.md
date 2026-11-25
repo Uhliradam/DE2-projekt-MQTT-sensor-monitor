@@ -132,6 +132,21 @@ The RGB LED indicates the connection status as follows:
 - Red: Wi-Fi or MQTT connection is unavailable.
 - Blinking yellow: The system is attempting to establish or restore a connection.
 
+The push button is used to switch between the environmental measurement display and the lunar phase display. It is connected to GP15 using an internal pull-up resistor.
+
+| Raspberry Pi Pico W | Push Button | Function |
+|---------------------|-------------|----------|
+| GP15 (Pin 20) | Terminal 1 | Display mode switching |
+| GND | Terminal 2 | Ground |
+
+The MQ-9 gas sensor is connected to the analog input of the Raspberry Pi Pico W. Its analog output voltage is used to monitor the sensor response to gases.
+
+| Raspberry Pi Pico W | MQ-9 | Function |
+|---------------------|------|----------|
+| GP26 (Pin 31) | A0 | Analog input (ADC0) |
+| 3V3(OUT) (Pin 36) | VCC | 3.3 V Power Supply |
+| GND | GND | Ground |
+
 The detailed connections are illustrated in the electrical schematic below.
 
 
